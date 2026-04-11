@@ -12,7 +12,7 @@
     "issues": "${issueTrackerUrl}"
   },
   "license": "${license}",
-  "icon": "assets/immersive_snow_reloaded/icon.png",
+  "icon": "icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [

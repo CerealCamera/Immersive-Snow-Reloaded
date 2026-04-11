@@ -1,4 +1,4 @@
-<img width="400" height="400" alt="Immersive Snow Icon" src="common/src/main/resources/assets/immersive_snow_reloaded/iconhq.png" />
+<img width="512" height="512" alt="Immersive Snow Icon" src="common/src/main/resources/assets/immersive_snow_reloaded/icon.png" />
 
 # Immersive Snow
 
