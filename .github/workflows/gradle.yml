@@ -18,7 +18,7 @@ jobs:
       - name: Set up JDK 21
         uses: actions/setup-java@v2
         with:
-          distribution: 'zulu'
+          distribution: 'graalvm'
           java-version: 21
           java-package: jdk
 
