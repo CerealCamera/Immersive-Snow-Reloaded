@@ -1,0 +1,52 @@
+name: Immersive Snow Reloaded Build Script
+
+on:
+  push: {}
+  pull_request: {}
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          submodules: true
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'zulu'
+          java-version: 21
+          java-package: jdk
+
+      - name: Grant execute permission to gradlew
+        run: chmod +x ./gradlew
+
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+            ./.gradle/loom-cache
+          key: ${{ runner.os }}-gradle4-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle4-
+
+      - name: Build Immersive Snow Reloaded
+        run: |
+          ./gradlew build
+
+      - name: Upload Fabric Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: immersive-snow-reloaded-fabric-artifacts
+          path: 'fabric/build/libs/*.jar'
+
+      - name: Upload Neoforge Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: immersive-snow-reloaded-neoforge-artifacts
+          path: 'neoforge/build/libs/*.jar'
