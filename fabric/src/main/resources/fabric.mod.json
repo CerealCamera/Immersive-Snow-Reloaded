@@ -12,15 +12,15 @@
     "issues": "${issueTrackerUrl}"
   },
   "license": "${license}",
-  "icon": "assets/immersivesnow_reloaded/icon.png",
+  "icon": "assets/immersive_snow_reloaded/icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.cerealcamera.immersivesnow_reloaded.fabric.Entrypoint"
+      "net.cerealcamera.immersive_snow_reloaded.fabric.Entrypoint"
     ]
   },
   "mixins": [
-    "immersivesnow_reloaded.mixins.json"
+    "immersive_snow_reloaded.mixins.json"
   ],
   "depends": {
     "fabric": ">=${fabricVersion}",

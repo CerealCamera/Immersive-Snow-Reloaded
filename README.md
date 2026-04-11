@@ -1,9 +1,6 @@
-<img src="common/src/main/resources/assets/immersivesnow/iconhq.png" width="128" align="right" />
+<img width="400" height="400" alt="Immersive Snow Icon" src="common/src/main/resources/assets/immersivesnow_reloaded/iconhq.png" />
 
-Immersive Snow
-==============
-
-[![Mod Version](https://shields.io/modrinth/v/immersive-snow)](https://modrinth.com/mod/immersive-snow)
+# Immersive Snow
 
 Small tweaks that add to Minecraft's Winter theme. Intended for use with a season mod.
 
@@ -23,10 +20,11 @@ The mod is not intended for use on its own. Whilst it will run by itself, it won
 
 ### Acknowledgements
 
-This mod is a remake of my private mod BetterSereneSeasons, which was originally a 1.19.2 Forge remake
+This mod is a fork of [Immersive Snow][6], which is a remake of Straywave's private mod BetterSereneSeasons, which was originally a 1.19.2 Forge remake
 of [Serene Tweaks][5].
 
 [1]: https://modrinth.com/mod/serene-seasons
 [2]: https://modrinth.com/mod/fabric-seasons
 [4]: https://modrinth.com/mod/snow-real-magic
 [5]: https://github.com/FIREdog5/SereneTweaks
+[6]: https://modrinth.com/mod/immersive-snow

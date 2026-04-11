@@ -28,5 +28,19 @@ versionRange = "[${minecraftVersion}]"
 ordering = "NONE"
 side = "BOTH"
 
+[[dependencies.${id}]]
+modId = "snowrealmagic"
+type = "optional"
+versionRange = "[1,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${id}]]
+modId = "sereneseasons"
+type = "optional"
+versionRange = "[1,)"
+ordering = "NONE"
+side = "BOTH"
+
 [[mixins]]
-config = "immersivesnow_reloaded.mixins.json"
+config = "immersive_snow_reloaded.mixins.json"
