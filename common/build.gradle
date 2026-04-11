@@ -1,31 +1,21 @@
-architectury { common("fabric", "forge", "neoforge") }
-
-repositories {
-    maven { url "https://maven.theillusivec4.top/" }
-    exclusiveContent {
-        forRepository { maven { url "https://cursemaven.com/" } }
-        filter { includeGroup "curse.maven" }
-    }
-    exclusiveContent {
-        forRepository { maven { url "https://api.modrinth.com/maven" } }
-        filter { includeGroup "maven.modrinth" }
-    }
+architectury {
+    common rootProject.enabled_platforms.split(',')
 }
 
 dependencies {
-    modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric}"
+    // We depend on Fabric Loader here to use the Fabric @Environment annotations,
+    // which get remapped to the correct annotations on each platform.
+    // Do NOT use other classes from Fabric Loader.
+    modImplementation "net.fabricmc:fabric-loader:$rootProject.fabric_loader_version"
 
     // These are only compile-time dependencies, their classes may or may not be absent/present at runtime.
-    modCompileOnly "maven.modrinth:serene-seasons:${parent.props.sereneseasons}"
-    modCompileOnly "maven.modrinth:glitchcore:${parent.props.glitchcore}"
+    modCompileOnly  "net.neoforged:neoforge:${rootProject.neoforge_version}"
 
-    modCompileOnly "maven.modrinth:betterdays:${parent.props.betterdays}"
-    compileOnly "com.illusivesoulworks.spectrelib:spectrelib-common:0.15.1+1.20.4"
+    modCompileOnly "maven.modrinth:serene-seasons:${rootProject.sereneseasons_neoforge}"
+    modCompileOnly "maven.modrinth:glitchcore:${rootProject.glitchcore_neoforge}"
+
+    modCompileOnly "maven.modrinth:snow-real-magic:${rootProject.snowrealmagic_neoforge}"
+    modCompileOnly "maven.modrinth:kiwi:${rootProject.kiwi_neoforge}"
+
     compileOnly "com.electronwill.night-config:core:3.6.0"
-
-    if (rootProject.minecraft != "1.21.4") {
-        modCompileOnly "maven.modrinth:snow-real-magic:${parent.props.snowrealmagic}"
-        modCompileOnly "maven.modrinth:kiwi:${parent.props.kiwi}"
-        modCompileOnly "net.fabricmc.fabric-api:fabric-api:${parent.props.fabric}+${rootProject.minecraft}"
-    }
 }

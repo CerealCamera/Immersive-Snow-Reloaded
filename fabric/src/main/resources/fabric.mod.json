@@ -12,32 +12,23 @@
     "issues": "${issueTrackerUrl}"
   },
   "license": "${license}",
-  "icon": "assets/immersivesnow/icon.png",
+  "icon": "assets/immersivesnow_reloaded/icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
-      "straywave.minecraft.immersivesnow.fabric.Entrypoint"
+      "net.cerealcamera.immersivesnow_reloaded.fabric.Entrypoint"
     ]
   },
   "mixins": [
-    "immersivesnow.mixins.json",
-    "immersivesnow.fabric.mixins.json"
+    "immersivesnow_reloaded.mixins.json"
   ],
   "depends": {
     "fabric": ">=${fabricVersion}",
     "minecraft": "${minecraftVersion}"
   },
   "recommends": {
-    "betterdays": "*",
     "snowrealmagic": "*",
     "sereneseasons": "*",
     "seasons": "*"
-  },
-  "custom": {
-    "modmenu": {
-      "links": {
-        "modmenu.discord": "https://discord.gg/yX7u32cKuN"
-      }
-    }
   }
 }

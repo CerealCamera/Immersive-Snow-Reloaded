@@ -1,18 +1,25 @@
-plugins { id "com.github.johnrengelman.shadow" version "7.1.2" }
-architectury { neoForge() }
+plugins {
+    id 'com.gradleup.shadow'
+}
+
+architectury {
+    neoForge()
+}
 
 configurations {
     common
     shadowCommon
     compileClasspath.extendsFrom common
     runtimeClasspath.extendsFrom common
+
+    shadowBundle
 }
 
 repositories {
     maven { url "https://maven.neoforged.net/releases" }
     exclusiveContent {
-        forRepository { maven { url "https://cursemaven.com/" } }
-        filter { includeGroup "curse.maven" }
+        forRepository {maven {url "https://cursemaven.com/"}}
+        filter {includeGroup "curse.maven"}
     }
     exclusiveContent {
         forRepository { maven { url "https://api.modrinth.com/maven" } }
@@ -21,10 +28,15 @@ repositories {
 }
 
 dependencies {
-    neoForge "net.neoforged:neoforge:${parent.props.neoforge}"
+    neoForge "net.neoforged:neoforge:${rootProject.neoforge_version}"
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionNeoForge")) { transitive false }
+
+    modImplementation "maven.modrinth:serene-seasons:${rootProject.sereneseasons_neoforge}"
+    modImplementation "maven.modrinth:glitchcore:${rootProject.glitchcore_neoforge}"
+    modImplementation "maven.modrinth:snow-real-magic:${rootProject.snowrealmagic_neoforge}"
+    modImplementation "maven.modrinth:kiwi:${rootProject.kiwi_neoforge}"
 }
 
 processResources {
@@ -38,37 +50,22 @@ processResources {
             "issueTrackerUrl" : rootProject.issues,
             "forgeUpdateUrl"  : rootProject.updater,
             "version"         : project.version,
-            "minecraftVersion": rootProject.minecraft,
-            "fabricVersion"   : rootProject.props.fabric,
-            "forgeVersion"    : rootProject.props.forge,
-            "neoForgeVersion" : rootProject.props.neoforge,
+            "minecraftVersion": rootProject.minecraft_version,
+            "fabricVersion"   : rootProject.fabric_loader_version_dependency,
+            "neoForgeVersion" : rootProject.neoforge_version_dependency,
     ]
 
     inputs.properties props
-    filesMatching("META-INF/neoforge.mods.toml") { expand props }
-    filesMatching("META-INF/mods.toml") { expand props } // For NeoForge 1.20.4
+    filesMatching("META-INF/neoforge.mods.toml") {
+        expand props
+    }
 }
 
 shadowJar {
-    exclude "fabric.mod.json"
-
-    configurations = [project.configurations.shadowCommon]
-    archiveClassifier.set "dev-shadow"
+    configurations = [project.configurations.shadowBundle]
+    archiveClassifier = 'dev-shadow'
 }
 
 remapJar {
     inputFile.set shadowJar.archiveFile
-    dependsOn shadowJar
-    archiveClassifier.set null
-}
-
-jar {
-    archiveClassifier.set "dev"
-    dependsOn processResources
-}
-
-sourcesJar {
-    def commonSources = project(":common").sourcesJar
-    dependsOn commonSources
-    from commonSources.archiveFile.map { zipTree(it) }
 }

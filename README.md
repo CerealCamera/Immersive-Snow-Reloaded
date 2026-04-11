@@ -19,8 +19,6 @@ The mod is not intended for use on its own. Whilst it will run by itself, it won
 - **Season Mods:** Snow will follow season temperature and recalculate in all chunks when the season changes.
   - [Serene Seasons (Fabric/Forge/NeoForge)][1]
   - [Fabric Seasons (Fabric)][2]
-- **Changing Day Cycle:** requires both a Season Mod above, and Better Days.
-  - [Better Days (Fabric/NeoForge)][3] (note: currently the integration is implemented by rewriting the `daySpeed` and `nightSpeed` configuration at runtime. To configure the day and night speed, use this mod's `betterDaysDaySpeed` and `betterDaysNightSpeed` options.)
 - Snow recalculation is also compatible with [Snow Real Magic][4], in that blocks like grass, flowers, fences, walls, etc. will be replaced with their snowy variant.
 
 ### Acknowledgements
@@ -30,6 +28,5 @@ of [Serene Tweaks][5].
 
 [1]: https://modrinth.com/mod/serene-seasons
 [2]: https://modrinth.com/mod/fabric-seasons
-[3]: https://modrinth.com/mod/betterdays
 [4]: https://modrinth.com/mod/snow-real-magic
 [5]: https://github.com/FIREdog5/SereneTweaks
