@@ -1,6 +1,6 @@
-<img width="512" height="512" alt="Immersive Snow Icon" src="common/src/main/resources/assets/immersive_snow_reloaded/icon.png" />
+<img width="512" height="512" alt="Immersive Snow (Reloaded) Icon" src="common/src/main/resources/icon.png" />
 
-# Immersive Snow
+# Immersive Snow (Reloaded)
 
 Small tweaks that add to Minecraft's Winter theme. Intended for use with a season mod.
 
