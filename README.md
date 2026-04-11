@@ -4,20 +4,19 @@ This mod is available on [Curseforge](https://www.curseforge.com/minecraft/mc-mo
 
 # Immersive Snow (Reloaded)
 
-Small tweaks that add to Minecraft's Winter theme. Intended for use with a season mod.
+Immersive Snow (Reloaded) is a fork of [Immersive Snow][6] made to work with newer versions of Better Days by removing it's Better Days integration. Immersive Snow includes small tweaks that add to Minecraft's Winter theme. Intended for use with a season mod.
 
 Features:
 
 - **Snow recalculation** upon chunk loading. No more winter chunks in the summer!
-- **Changing day cycle duration** depending on the season. Longer nights in the winter.
 
 ### Compatibility
 
 The mod is not intended for use on its own. Whilst it will run by itself, it won't do much. The following mods are supported for integrations:
 
 - **Season Mods:** Snow will follow season temperature and recalculate in all chunks when the season changes.
-  - [Serene Seasons (Fabric/Forge/NeoForge)][1]
-  - [Fabric Seasons (Fabric)][2]
+    - [Serene Seasons (Fabric/Forge/NeoForge)][1]
+    - [Fabric Seasons (Fabric)][2]
 - Snow recalculation is also compatible with [Snow Real Magic][4], in that blocks like grass, flowers, fences, walls, etc. will be replaced with their snowy variant.
 
 ### Acknowledgements
