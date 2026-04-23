@@ -1,4 +1,4 @@
-This mod is available on [Curseforge](https://www.curseforge.com/minecraft/mc-mods/immersive-snow-reloaded) (Hopefully soon on Modrinth too)
+This mod is available on [Modrinth](https://modrinth.com/mod/immersive-snow-reloaded) and [Curseforge](https://www.curseforge.com/minecraft/mc-mods/immersive-snow-reloaded)
 
 <img width="512" height="512" alt="Immersive Snow (Reloaded) Icon" src="common/src/main/resources/icon.png" />
 
