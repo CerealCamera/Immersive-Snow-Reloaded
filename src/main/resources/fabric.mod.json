@@ -23,7 +23,7 @@
     "immersive_snow_reloaded.mixins.json"
   ],
   "depends": {
-    "minecraft": "${minecraftVersion}"
+    "minecraft": "${minecraftDependency}"
   },
   "recommends": {
     "snowrealmagic": "*",
