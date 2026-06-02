@@ -28,11 +28,11 @@ dependencies {
     implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 
     // These are only compile-time dependencies, their classes may or may not be absent/present at runtime.
-    compileOnly "maven.modrinth:serene-seasons:${project.sereneseasons_version}"
-    compileOnly "maven.modrinth:glitchcore:${project.glitchcore_version}"
+    implementation "maven.modrinth:serene-seasons:${project.sereneseasons_version}"
+    implementation "maven.modrinth:glitchcore:${project.glitchcore_version}"
 
-    compileOnly "maven.modrinth:snow-real-magic:${project.snowrealmagic_version}"
-    compileOnly "maven.modrinth:kiwi:${project.kiwi_version}"
+    implementation "maven.modrinth:snow-real-magic:${project.snowrealmagic_version}"
+    implementation "maven.modrinth:kiwi:${project.kiwi_version}"
 
     compileOnly "com.electronwill.night-config:core:3.6.0"
 }

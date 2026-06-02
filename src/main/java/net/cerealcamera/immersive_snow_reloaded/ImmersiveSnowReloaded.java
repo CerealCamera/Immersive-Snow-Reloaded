@@ -6,10 +6,13 @@ import org.apache.logging.log4j.Logger;
 
 public class ImmersiveSnowReloaded {
     public static final String MOD_ID = "immersive_snow_reloaded";
-    public static Logger LOGGER = LogManager.getLogger(MOD_ID);
+    public static final String MOD_NAME = "Immersive Snow Reloaded";
+    public static Logger LOGGER = LogManager.getLogger(MOD_NAME);
 
     public static void init() {
         Configuration.load();
-        if (ModHooks.sereneSeasonsLoaded()) SereneSeasonsHook.init();
+        if (ModHooks.sereneSeasonsLoaded()) {
+            SereneSeasonsHook.init();
+        }
     }
 }

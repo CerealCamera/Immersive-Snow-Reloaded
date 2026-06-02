@@ -1,6 +1,6 @@
 package net.cerealcamera.immersive_snow_reloaded;
 
-import net.cerealcamera.immersive_snow_reloaded.mixin.ChunkMapInvoker;
+import net.cerealcamera.immersive_snow_reloaded.mixin.ChunkMapAccessor;
 import net.cerealcamera.immersive_snow_reloaded.mixin.MinecraftServerInvoker;
 import net.minecraft.server.level.ChunkHolder;
 import net.minecraft.server.level.ServerLevel;
@@ -20,13 +20,13 @@ public class ImmersiveSnowReloadedEvents {
     }
 
     public static void onChunkLoad(ServerLevel level, ChunkAccess chunk) {
-       if (!level.dimension().toString().equals("minecraft:overworld")) return;
+       if (!level.dimension().identifier().toString().equals("minecraft:overworld")) return;
        Queue.tryAdd(chunk.getPos(), false);
     }
 
     public static void onWorldTick(ServerLevel level) {
         MinecraftServerInvoker server = (MinecraftServerInvoker) level.getServer();
-        if (!level.dimension().toString().equals("minecraft:overworld")) return;
+        if (!level.dimension().identifier().toString().equals("minecraft:overworld")) return;
 
         if (Queue.isEmpty()) {
             Queue.shuffle();
@@ -69,13 +69,13 @@ public class ImmersiveSnowReloadedEvents {
     }
 
     public static void onSeasonChange(ServerLevel level) {
-        if (!level.dimension().toString().equals("minecraft:overworld")) return;
+        if (!level.dimension().identifier().toString().equals("minecraft:overworld")) return;
 
         Memory.erase();
         Queue.clear();
 
-        ChunkMapInvoker chunkMap = (ChunkMapInvoker) level.getChunkSource().chunkMap;
-        for (ChunkHolder chunk : chunkMap.snow$getChunks()) {
+        ChunkMapAccessor chunkMap = (ChunkMapAccessor) level.getChunkSource().chunkMap;
+        for (ChunkHolder chunk : chunkMap.getVisibleChunkMap().values()) {
             Queue.tryAdd(chunk.getPos(), false);
         }
     }

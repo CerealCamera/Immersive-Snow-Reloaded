@@ -13,6 +13,6 @@ public class ServerLevelMixin {
     @Inject(method = "tickChunk", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/profiling/ProfilerFiller;popPush(Ljava/lang/String;)V", shift = At.Shift.AFTER, ordinal = 0))
     private void snow$addToQueue(LevelChunk chunk, int tickSpeed, CallbackInfo ci) {
         // Apparently injecting here is more reliable and faster than receiving chunk load events. Go figure.
-        if (chunk.getPos().toString().equals("minecraft:overworld")) Queue.tryAdd(chunk.getPos(), true);
+        if (chunk.getLevel().dimension().identifier().toString().equals("minecraft:overworld")) Queue.tryAdd(chunk.getPos(), true);
     }
 }
