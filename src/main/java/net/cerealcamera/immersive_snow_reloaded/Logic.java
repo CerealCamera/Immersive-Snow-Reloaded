@@ -1,7 +1,7 @@
 package net.cerealcamera.immersive_snow_reloaded;
 
 import net.cerealcamera.immersive_snow_reloaded.hook.SereneSeasonsHook;
-import net.cerealcamera.immersive_snow_reloaded.hook.SnowRealMagicHook;
+//import net.cerealcamera.immersive_snow_reloaded.hook.SnowRealMagicHook;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ChunkPos;
@@ -62,12 +62,12 @@ public class Logic {
             Utils.setBlock(level, topPos, Blocks.SNOW.defaultBlockState());
         } else if (biome.shouldFreeze(level, blockPos, false) && !blockState.is(Blocks.ICE)) {
             Utils.setBlock(level, blockPos, Blocks.ICE.defaultBlockState());
-        } else if (SNOW_REAL_MAGIC && coldEnoughToSnow(level, biome, topPos)) {
+        }/* else if (SNOW_REAL_MAGIC && coldEnoughToSnow(level, biome, topPos)) {
             if (SnowRealMagicHook.canReplaceBlock(topState) && !SnowRealMagicHook.canMelt(topState))
                 SnowRealMagicHook.replaceBlock(level, topPos, topState);
             else if (SnowRealMagicHook.canReplaceBlock(blockState) && !SnowRealMagicHook.canMelt(blockState))
                 SnowRealMagicHook.replaceBlock(level, blockPos, blockState);
-        }
+        }*/
 
         /* Melting */
         else if (blockState.is(Blocks.ICE) && shouldMelt(level, biome, topPos)) {
@@ -75,12 +75,12 @@ public class Logic {
             level.neighborChanged(blockPos, IceBlock.meltsInto().getBlock(), null);
         } else if (topState.is(Blocks.SNOW) && shouldMelt(level, biome, topPos)) {
             Utils.setBlock(level, topPos, Blocks.AIR.defaultBlockState());
-        } else if (SNOW_REAL_MAGIC && shouldMelt(level, biome, topPos)) {
+        }/* else if (SNOW_REAL_MAGIC && shouldMelt(level, biome, topPos)) {
             if (SnowRealMagicHook.canMelt(topState))
                 SnowRealMagicHook.melt(level, topPos, topState);
             else if (SnowRealMagicHook.canMelt(blockState))
                 SnowRealMagicHook.melt(level, blockPos, blockState);
-        }
+        }*/
     }
 
     private static boolean shouldMelt(Level level, Biome biome, BlockPos pos) {

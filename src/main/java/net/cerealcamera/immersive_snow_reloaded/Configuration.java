@@ -3,7 +3,7 @@ package net.cerealcamera.immersive_snow_reloaded;
 import com.google.common.io.Files;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import net.fabricmc.loader.api.FabricLoader;
+import net.neoforged.fml.loading.FMLPaths;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -18,7 +18,7 @@ public class Configuration {
     private static final File PATH = getConfigDir().resolve("ImmersiveSnowReloaded.json").toFile();
 
     public static Path getConfigDir() {
-        return FabricLoader.getInstance().getConfigDir();
+        return FMLPaths.CONFIGDIR.get();
     }
 
     public static void load() {

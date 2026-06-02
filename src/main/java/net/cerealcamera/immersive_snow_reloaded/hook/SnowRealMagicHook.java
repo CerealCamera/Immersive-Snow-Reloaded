@@ -1,5 +1,5 @@
 package net.cerealcamera.immersive_snow_reloaded.hook;
-
+/*
 import net.cerealcamera.immersive_snow_reloaded.Utils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -28,3 +28,4 @@ public class SnowRealMagicHook {
         Utils.setBlock(level, pos, snow.srm$getRaw(state, level, pos));
     }
 }
+*/
