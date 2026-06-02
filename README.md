@@ -1,10 +1,10 @@
 This mod is available on [Modrinth](https://modrinth.com/mod/immersive-snow-reloaded) and [Curseforge](https://www.curseforge.com/minecraft/mc-mods/immersive-snow-reloaded)
 
-<img width="512" height="512" alt="Immersive Snow (Reloaded) Icon" src="common/src/main/resources/icon.png" />
+<img width="512" height="512" alt="Immersive Snow (Reloaded) Icon" src="src/main/resources/icon.png" />
 
 # Immersive Snow (Reloaded)
 
-Immersive Snow (Reloaded) is a fork of [Immersive Snow][6] made to work with newer versions of Better Days by removing it's Better Days integration. Immersive Snow includes small tweaks that add to Minecraft's Winter theme. Intended for use with a season mod.
+Immersive Snow (Reloaded) is a fork of [Immersive Snow][6] made to work with newer versions of Better Days by removing its Better Days integration (Better Days already has built-in Serene Seasons support on newer versions). Immersive Snow includes small tweaks that add to Minecraft's Winter theme. Intended for use with a season mod.
 
 Features:
 
