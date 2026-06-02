@@ -48,7 +48,7 @@ processResources {
             "issueTrackerUrl"    : project.issues,
             "forgeUpdateUrl"     : project.updater,
             "version"            : project.version,
-            "minecraftDependency": project.minecraft_dependency
+            "minecraftDependency": project.fabric_minecraft_dependency
     ]
 
     inputs.properties props
