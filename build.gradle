@@ -35,7 +35,7 @@ java.toolchain.languageVersion = JavaLanguageVersion.of(25)
 
 neoForge {
     // Specify the version of NeoForge to use.
-    version = project.neo_version
+    version = project.neoforge_version
 
     // This line is optional. Access Transformers are automatically detected
     // accessTransformers = project.files('src/main/resources/META-INF/accesstransformer.cfg')
@@ -143,8 +143,8 @@ var generateModMetadata = tasks.register("generateModMetadata", ProcessResources
             "issueTrackerUrl"    : project.issues,
             "forgeUpdateUrl"     : project.updater,
             "version"            : project.version,
-            "minecraftDependency": project.minecraft_dependency,
-            "neoForgeVersion"    : rootProject.neoforge_dependency,
+            "minecraftDependency": project.neoforge_minecraft_dependency,
+            "neoForgeVersion"    : project.neoforge_dependency,
     ]
 
     inputs.properties props
