@@ -23,12 +23,9 @@
     "immersive_snow_reloaded.mixins.json"
   ],
   "depends": {
-    "fabric": ">=${fabricVersion}",
-    "minecraft": "${minecraftVersion}"
+    "minecraft": "${minecraftDependency}"
   },
   "recommends": {
-    "snowrealmagic": "*",
-    "sereneseasons": "*",
-    "seasons": "*"
+    "sereneseasons": "*"
   }
 }

@@ -14,8 +14,5 @@ dependencies {
     modCompileOnly "maven.modrinth:serene-seasons:${rootProject.sereneseasons_neoforge}"
     modCompileOnly "maven.modrinth:glitchcore:${rootProject.glitchcore_neoforge}"
 
-    modCompileOnly "maven.modrinth:snow-real-magic:${rootProject.snowrealmagic_neoforge}"
-    modCompileOnly "maven.modrinth:kiwi:${rootProject.kiwi_neoforge}"
-
     compileOnly "com.electronwill.night-config:core:3.6.0"
 }

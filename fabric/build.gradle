@@ -33,25 +33,23 @@ dependencies {
     common(project(path: ':common', configuration: 'namedElements')) { transitive = false }
     shadowBundle project(path: ':common', configuration: 'transformProductionFabric')
 
-    modImplementation "maven.modrinth:fabric-seasons:${rootProject.fabric_seasons}"
+    modImplementation "maven.modrinth:serene-seasons:${rootProject.sereneseasons_fabric}"
+    modImplementation "maven.modrinth:glitchcore:${rootProject.glitchcore_fabric}"
     modImplementation "com.terraformersmc:modmenu:${rootProject.mod_menu_version}"
-    modImplementation "maven.modrinth:snow-real-magic:${rootProject.snowrealmagic_fabric}"
-    modImplementation "maven.modrinth:kiwi:${rootProject.kiwi_fabric}"
 }
 
 processResources {
     def props = [
-            "id"              : rootProject.id,
-            "name"            : rootProject.displayname,
-            "description"     : rootProject.description,
-            "author"          : rootProject.author,
-            "license"         : rootProject.license,
-            "websiteUrl"      : rootProject.website,
-            "issueTrackerUrl" : rootProject.issues,
-            "version"         : project.version,
-            "minecraftVersion": rootProject.minecraft_version,
-            "fabricVersion"   : rootProject.fabric_loader_version_dependency,
-            "neoForgeVersion" : rootProject.neoforge_version_dependency,
+            "id"                 : project.id,
+            "name"               : project.displayname,
+            "description"        : project.description,
+            "author"             : project.author,
+            "license"            : project.license,
+            "websiteUrl"         : project.website,
+            "issueTrackerUrl"    : project.issues,
+            "forgeUpdateUrl"     : project.updater,
+            "version"            : project.version,
+            "minecraftDependency": project.fabric_minecraft_dependency
     ]
 
     inputs.properties props

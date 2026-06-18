@@ -1,7 +1,6 @@
 package net.cerealcamera.immersive_snow_reloaded;
 
 import net.cerealcamera.immersive_snow_reloaded.hook.SereneSeasonsHook;
-import net.cerealcamera.immersive_snow_reloaded.hook.SnowRealMagicHook;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ChunkPos;
@@ -15,7 +14,6 @@ import net.minecraft.world.level.levelgen.Heightmap;
 
 public class Logic {
     private static final boolean SERENE_SEASONS = ModHooks.sereneSeasonsLoaded();
-    private static final boolean SNOW_REAL_MAGIC = ModHooks.snowRealMagicLoaded();
 
     /**
      * Iterates over all (X, Z) combinations within a chunk and runs snow recalculation logic on them.
@@ -57,29 +55,26 @@ public class Logic {
 
         Biome biome = level.getBiome(topPos).value();
 
+        /* Leaf litter removing */
+        if (topState.is(Blocks.LEAF_LITTER)) {
+            Utils.setBlock(level, topPos, Blocks.AIR.defaultBlockState());
+            if (!biome.shouldSnow(level, topPos))
+                Utils.setBlock(level, topPos, topState);
+        }
+
         /* Snowing and Freezing */
         if (biome.shouldSnow(level, topPos) && !topState.is(Blocks.SNOW) && Blocks.SNOW.defaultBlockState().canSurvive(level, topPos)) {
             Utils.setBlock(level, topPos, Blocks.SNOW.defaultBlockState());
         } else if (biome.shouldFreeze(level, blockPos, false) && !blockState.is(Blocks.ICE)) {
             Utils.setBlock(level, blockPos, Blocks.ICE.defaultBlockState());
-        } else if (SNOW_REAL_MAGIC && coldEnoughToSnow(level, biome, topPos)) {
-            if (SnowRealMagicHook.canReplaceBlock(topState) && !SnowRealMagicHook.canMelt(topState))
-                SnowRealMagicHook.replaceBlock(level, topPos, topState);
-            else if (SnowRealMagicHook.canReplaceBlock(blockState) && !SnowRealMagicHook.canMelt(blockState))
-                SnowRealMagicHook.replaceBlock(level, blockPos, blockState);
         }
 
         /* Melting */
         else if (blockState.is(Blocks.ICE) && shouldMelt(level, biome, topPos)) {
             Utils.setBlock(level, blockPos, IceBlock.meltsInto());
-            level.neighborChanged(blockPos, IceBlock.meltsInto().getBlock(), blockPos);
+            level.neighborChanged(blockPos, IceBlock.meltsInto().getBlock(), null);
         } else if (topState.is(Blocks.SNOW) && shouldMelt(level, biome, topPos)) {
             Utils.setBlock(level, topPos, Blocks.AIR.defaultBlockState());
-        } else if (SNOW_REAL_MAGIC && shouldMelt(level, biome, topPos)) {
-            if (SnowRealMagicHook.canMelt(topState))
-                SnowRealMagicHook.melt(level, topPos, topState);
-            else if (SnowRealMagicHook.canMelt(blockState))
-                SnowRealMagicHook.melt(level, blockPos, blockState);
         }
     }
 
@@ -87,12 +82,12 @@ public class Logic {
         // TODO: seems like light level 11 is one block too much for SRM, but works fine for vanilla?
         boolean brightEnough = level.getBrightness(LightLayer.BLOCK, pos) > 11;
         if (SERENE_SEASONS) return SereneSeasonsHook.shouldMelt(level, biome, pos) || brightEnough;
-        return biome.warmEnoughToRain(pos) || brightEnough;
+        return biome.warmEnoughToRain(pos, level.getSeaLevel()) || brightEnough;
     }
 
     private static boolean coldEnoughToSnow(Level level, Biome biome, BlockPos pos) {
         boolean darkEnough = level.getBrightness(LightLayer.BLOCK, pos) <= 11;
         if (SERENE_SEASONS) return SereneSeasonsHook.coldEnoughToSnow(level, biome, pos) && darkEnough;
-        return biome.coldEnoughToSnow(pos) && darkEnough;
+        return biome.coldEnoughToSnow(pos, level.getSeaLevel()) && darkEnough;
     }
 }

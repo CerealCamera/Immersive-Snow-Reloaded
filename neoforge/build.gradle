@@ -39,24 +39,21 @@ dependencies {
 
     modImplementation "maven.modrinth:serene-seasons:${rootProject.sereneseasons_neoforge}"
     modImplementation "maven.modrinth:glitchcore:${rootProject.glitchcore_neoforge}"
-    modImplementation "maven.modrinth:snow-real-magic:${rootProject.snowrealmagic_neoforge}"
-    modImplementation "maven.modrinth:kiwi:${rootProject.kiwi_neoforge}"
 }
 
 processResources {
     def props = [
-            "id"              : rootProject.id,
-            "name"            : rootProject.displayname,
-            "description"     : rootProject.description,
-            "author"          : rootProject.author,
-            "license"         : rootProject.license,
-            "websiteUrl"      : rootProject.website,
-            "issueTrackerUrl" : rootProject.issues,
-            "forgeUpdateUrl"  : rootProject.updater,
-            "version"         : project.version,
-            "minecraftVersion": rootProject.minecraft_version,
-            "fabricVersion"   : rootProject.fabric_loader_version_dependency,
-            "neoForgeVersion" : rootProject.neoforge_version_dependency,
+            "id"                 : project.id,
+            "name"               : project.displayname,
+            "description"        : project.description,
+            "author"             : project.author,
+            "license"            : project.license,
+            "websiteUrl"         : project.website,
+            "issueTrackerUrl"    : project.issues,
+            "forgeUpdateUrl"     : project.updater,
+            "version"            : project.version,
+            "minecraftDependency": project.neoforge_minecraft_dependency,
+            "neoForgeVersion"    : project.neoforge_dependency
     ]
 
     inputs.properties props

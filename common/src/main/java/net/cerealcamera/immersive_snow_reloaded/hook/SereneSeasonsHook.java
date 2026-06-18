@@ -27,7 +27,7 @@ public class SereneSeasonsHook {
     }
 
     public static boolean shouldMelt(Level level, Biome biome, BlockPos pos) {
-        boolean vanillaBehavior = !biome.coldEnoughToSnow(pos);
+        boolean vanillaBehavior = !biome.coldEnoughToSnow(pos, level.getSeaLevel());
 
         // Bypass if biome is blacklisted via tags
         Holder<Biome> biomeHolder = Holder.direct(biome);
@@ -44,6 +44,6 @@ public class SereneSeasonsHook {
     }
 
     public static boolean coldEnoughToSnow(Level level, Biome biome, BlockPos pos) {
-        return SeasonHooks.getBiomeTemperature(level, Holder.direct(biome), pos) < 0.15F;
+        return SeasonHooks.getBiomeTemperature(level, Holder.direct(biome), pos, level.getSeaLevel()) < 0.15F;
     }
 }

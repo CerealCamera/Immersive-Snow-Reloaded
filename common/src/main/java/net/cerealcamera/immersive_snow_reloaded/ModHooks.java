@@ -7,9 +7,4 @@ public class ModHooks {
     public static boolean sereneSeasonsLoaded() {
         return false;
     }
-
-    @ExpectPlatform
-    public static boolean snowRealMagicLoaded() {
-        return false;
-    }
 }

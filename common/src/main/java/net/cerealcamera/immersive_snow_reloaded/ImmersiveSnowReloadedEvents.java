@@ -1,6 +1,6 @@
 package net.cerealcamera.immersive_snow_reloaded;
 
-import net.cerealcamera.immersive_snow_reloaded.mixin.ChunkMapInvoker;
+import net.cerealcamera.immersive_snow_reloaded.mixin.ChunkMapAccessor;
 import net.cerealcamera.immersive_snow_reloaded.mixin.MinecraftServerInvoker;
 import net.minecraft.server.level.ChunkHolder;
 import net.minecraft.server.level.ServerLevel;
@@ -74,8 +74,8 @@ public class ImmersiveSnowReloadedEvents {
         Memory.erase();
         Queue.clear();
 
-        ChunkMapInvoker chunkMap = (ChunkMapInvoker) level.getChunkSource().chunkMap;
-        for (ChunkHolder chunk : chunkMap.snow$getChunks()) {
+        ChunkMapAccessor chunkMap = (ChunkMapAccessor) level.getChunkSource().chunkMap;
+        for (ChunkHolder chunk : chunkMap.getVisibleChunkMap().values()) {
             Queue.tryAdd(chunk.getPos(), false);
         }
     }
