@@ -42,5 +42,5 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: immersive-snow-reloaded-neoforge-artifacts
+          name: immersive-snow-reloaded-artifacts
           path: 'build/libs/*.jar'
