@@ -1,7 +1,5 @@
-package net.cerealcamera.immersive_snow_reloaded.neoforge;
+package net.cerealcamera.immersive_snow_reloaded;
 
-import net.cerealcamera.immersive_snow_reloaded.Command;
-import net.cerealcamera.immersive_snow_reloaded.ImmersiveSnowReloadedEvents;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;

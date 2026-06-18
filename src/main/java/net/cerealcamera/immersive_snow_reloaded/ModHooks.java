@@ -1,8 +1,8 @@
-package net.cerealcamera.immersive_snow_reloaded.neoforge;
+package net.cerealcamera.immersive_snow_reloaded;
 
 import net.neoforged.fml.ModList;
 
-public class ModHooksImpl {
+public class ModHooks {
     private static final boolean SERENE_SEASONS = ModList.get().getModFileById("sereneseasons") != null;
 
     public static boolean sereneSeasonsLoaded() {

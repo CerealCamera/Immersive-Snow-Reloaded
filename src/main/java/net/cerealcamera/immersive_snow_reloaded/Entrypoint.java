@@ -1,6 +1,5 @@
-package net.cerealcamera.immersive_snow_reloaded.neoforge;
+package net.cerealcamera.immersive_snow_reloaded;
 
-import net.cerealcamera.immersive_snow_reloaded.ImmersiveSnowReloaded;
 import net.neoforged.fml.common.Mod;
 
 @Mod(ImmersiveSnowReloaded.MOD_ID)

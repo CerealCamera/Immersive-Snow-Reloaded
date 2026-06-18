@@ -20,13 +20,13 @@ public class ImmersiveSnowReloadedEvents {
     }
 
     public static void onChunkLoad(ServerLevel level, ChunkAccess chunk) {
-       if (!level.dimension().location().toString().equals("minecraft:overworld")) return;
+       if (!level.dimension().identifier().toString().equals("minecraft:overworld")) return;
        Queue.tryAdd(chunk.getPos(), false);
     }
 
     public static void onWorldTick(ServerLevel level) {
         MinecraftServerInvoker server = (MinecraftServerInvoker) level.getServer();
-        if (!level.dimension().location().toString().equals("minecraft:overworld")) return;
+        if (!level.dimension().identifier().toString().equals("minecraft:overworld")) return;
 
         if (Queue.isEmpty()) {
             Queue.shuffle();
@@ -69,7 +69,7 @@ public class ImmersiveSnowReloadedEvents {
     }
 
     public static void onSeasonChange(ServerLevel level) {
-        if (!level.dimension().location().toString().equals("minecraft:overworld")) return;
+        if (!level.dimension().identifier().toString().equals("minecraft:overworld")) return;
 
         Memory.erase();
         Queue.clear();

@@ -21,7 +21,7 @@ public class SereneSeasonsHook {
     public static void init() {
         EventManager.addListener((SeasonChangedEvent.Standard event) -> {
             Level level = event.getLevel();
-            if (level.isClientSide() || !level.dimension().location().toString().equals("minecraft:overworld")) return;
+            if (level.isClientSide() || !level.dimension().identifier().toString().equals("minecraft:overworld")) return;
             ImmersiveSnowReloadedEvents.onSeasonChange((ServerLevel) level);
         });
     }

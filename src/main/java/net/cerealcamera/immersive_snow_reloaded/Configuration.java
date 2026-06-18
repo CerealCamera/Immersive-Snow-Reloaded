@@ -3,7 +3,7 @@ package net.cerealcamera.immersive_snow_reloaded;
 import com.google.common.io.Files;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import dev.architectury.injectables.annotations.ExpectPlatform;
+import net.neoforged.fml.loading.FMLPaths;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -17,9 +17,8 @@ public class Configuration {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private static final File PATH = getConfigDir().resolve("ImmersiveSnowReloaded.json").toFile();
 
-    @ExpectPlatform
     public static Path getConfigDir() {
-        throw new AssertionError();
+        return FMLPaths.CONFIGDIR.get();
     }
 
     public static void load() {
