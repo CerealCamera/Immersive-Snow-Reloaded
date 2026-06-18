@@ -39,14 +39,8 @@ jobs:
         run: |
           ./gradlew build
 
-      - name: Upload Fabric Artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: immersive-snow-reloaded-fabric-artifacts
-          path: 'fabric/build/libs/*.jar'
-
-      - name: Upload Neoforge Artifacts
+      - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: immersive-snow-reloaded-neoforge-artifacts
-          path: 'neoforge/build/libs/*.jar'
+          path: 'build/libs/*.jar'
