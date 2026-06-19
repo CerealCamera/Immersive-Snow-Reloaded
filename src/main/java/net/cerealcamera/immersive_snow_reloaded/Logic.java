@@ -57,6 +57,13 @@ public class Logic {
 
         Biome biome = level.getBiome(topPos).value();
 
+        /* Leaf litter removing */
+        if (topState.is(Blocks.LEAF_LITTER)) {
+            Utils.setBlock(level, topPos, Blocks.AIR.defaultBlockState());
+            if (!biome.shouldSnow(level, topPos))
+                Utils.setBlock(level, topPos, topState);
+        }
+
         /* Snowing and Freezing */
         if (biome.shouldSnow(level, topPos) && !topState.is(Blocks.SNOW) && Blocks.SNOW.defaultBlockState().canSurvive(level, topPos)) {
             Utils.setBlock(level, topPos, Blocks.SNOW.defaultBlockState());
