@@ -23,7 +23,8 @@
     "immersive_snow_reloaded.mixins.json"
   ],
   "depends": {
-    "minecraft": "${minecraftDependency}"
+    "minecraft": "${minecraftDependency}",
+    "fabric-lifecycle-events-v1": "*"
   },
   "recommends": {
     "snowrealmagic": "*",
