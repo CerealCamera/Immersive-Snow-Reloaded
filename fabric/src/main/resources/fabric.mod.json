@@ -29,6 +29,7 @@
   "recommends": {
     "snowrealmagic": "*",
     "sereneseasons": "*",
-    "seasons": "*"
+    "seasons": "*",
+    "vanillabackport": "*"
   }
 }

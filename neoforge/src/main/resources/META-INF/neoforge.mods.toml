@@ -43,5 +43,12 @@ versionRange = "[1,)"
 ordering = "NONE"
 side = "BOTH"
 
+[[dependencies.${id}]]
+modId = "vanillabackport"
+type = "optional"
+versionRange = "[1,)"
+ordering = "NONE"
+side = "BOTH"
+
 [[mixins]]
 config = "immersive_snow_reloaded.mixins.json"
