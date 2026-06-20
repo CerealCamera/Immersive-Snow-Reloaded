@@ -2,6 +2,7 @@ package net.cerealcamera.immersive_snow_reloaded;
 
 import net.cerealcamera.immersive_snow_reloaded.hook.SereneSeasonsHook;
 import net.cerealcamera.immersive_snow_reloaded.hook.SnowRealMagicHook;
+import net.cerealcamera.immersive_snow_reloaded.hook.VanillaBackportHook;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ChunkPos;
@@ -16,6 +17,7 @@ import net.minecraft.world.level.levelgen.Heightmap;
 public class Logic {
     private static final boolean SERENE_SEASONS = ModHooks.sereneSeasonsLoaded();
     private static final boolean SNOW_REAL_MAGIC = ModHooks.snowRealMagicLoaded();
+    private static final boolean VANILLA_BACKPORT = ModHooks.vanillaBackportLoaded();
 
     /**
      * Iterates over all (X, Z) combinations within a chunk and runs snow recalculation logic on them.
@@ -56,6 +58,15 @@ public class Logic {
         BlockState blockState = level.getBlockState(blockPos);
 
         Biome biome = level.getBiome(topPos).value();
+
+        /* Leaf litter removing */
+        if (VANILLA_BACKPORT) {
+            if (topState.is(VanillaBackportHook.LEAF_LITTER)) {
+                Utils.setBlock(level, topPos, Blocks.AIR.defaultBlockState());
+                if (!biome.shouldSnow(level, topPos))
+                    Utils.setBlock(level, topPos, topState);
+            }
+        }
 
         /* Snowing and Freezing */
         if (biome.shouldSnow(level, topPos) && !topState.is(Blocks.SNOW) && Blocks.SNOW.defaultBlockState().canSurvive(level, topPos)) {

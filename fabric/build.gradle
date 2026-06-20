@@ -37,6 +37,8 @@ dependencies {
     modImplementation "com.terraformersmc:modmenu:${rootProject.mod_menu_version}"
     modImplementation "maven.modrinth:snow-real-magic:${rootProject.snowrealmagic_fabric}"
     modImplementation "maven.modrinth:kiwi:${rootProject.kiwi_fabric}"
+    modImplementation "maven.modrinth:vanillabackport:${rootProject.vanillabackport_fabric}"
+    modImplementation "maven.modrinth:platform:${rootProject.platform_fabric}"
 }
 
 processResources {

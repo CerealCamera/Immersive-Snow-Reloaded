@@ -17,5 +17,7 @@ dependencies {
     modCompileOnly "maven.modrinth:snow-real-magic:${rootProject.snowrealmagic_neoforge}"
     modCompileOnly "maven.modrinth:kiwi:${rootProject.kiwi_neoforge}"
 
+    modCompileOnly "maven.modrinth:vanillabackport:${rootProject.vanillabackport_fabric}"
+
     compileOnly "com.electronwill.night-config:core:3.6.0"
 }

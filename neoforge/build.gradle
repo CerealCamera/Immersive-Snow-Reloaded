@@ -41,6 +41,8 @@ dependencies {
     modImplementation "maven.modrinth:glitchcore:${rootProject.glitchcore_neoforge}"
     modImplementation "maven.modrinth:snow-real-magic:${rootProject.snowrealmagic_neoforge}"
     modImplementation "maven.modrinth:kiwi:${rootProject.kiwi_neoforge}"
+    modImplementation "maven.modrinth:vanillabackport:${rootProject.vanillabackport_neoforge}"
+    modImplementation "maven.modrinth:platform:${rootProject.platform_neoforge}"
 }
 
 processResources {

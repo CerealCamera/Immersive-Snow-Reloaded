@@ -12,4 +12,9 @@ public class ModHooks {
     public static boolean snowRealMagicLoaded() {
         return false;
     }
+
+    @ExpectPlatform
+    public static boolean vanillaBackportLoaded() {
+        return false;
+    }
 }
