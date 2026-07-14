@@ -58,6 +58,13 @@ public class Logic {
         BlockState blockState = level.getBlockState(blockPos);
 
         Biome biome = level.getBiome(topPos).value();
+        String biomeId = level.getBiome(topPos).getRegisteredName();
+
+        if (Configuration.data.isBlacklist) {
+            if (Configuration.data.biomeBlacklist.contains(biomeId)) return;
+        } else {
+            if (!Configuration.data.biomeBlacklist.contains(biomeId)) return;
+        }
 
         /* Leaf litter removing */
         if (VANILLA_BACKPORT) {
@@ -69,9 +76,9 @@ public class Logic {
         }
 
         /* Snowing and Freezing */
-        if (biome.shouldSnow(level, topPos) && !topState.is(Blocks.SNOW) && Blocks.SNOW.defaultBlockState().canSurvive(level, topPos)) {
+        if (biome.shouldSnow(level, topPos) && !topState.is(Blocks.SNOW) && Blocks.SNOW.defaultBlockState().canSurvive(level, topPos) && (!Configuration.data.strictReplacement || topState.isAir())) {
             Utils.setBlock(level, topPos, Blocks.SNOW.defaultBlockState());
-        } else if (biome.shouldFreeze(level, blockPos, false) && !blockState.is(Blocks.ICE)) {
+        } else if (biome.shouldFreeze(level, blockPos, false) && !blockState.is(Blocks.ICE) && (!Configuration.data.strictReplacement || blockState.is(Blocks.WATER))) {
             Utils.setBlock(level, blockPos, Blocks.ICE.defaultBlockState());
         } else if (SNOW_REAL_MAGIC && coldEnoughToSnow(level, biome, topPos)) {
             if (SnowRealMagicHook.canReplaceBlock(topState) && !SnowRealMagicHook.canMelt(topState))
