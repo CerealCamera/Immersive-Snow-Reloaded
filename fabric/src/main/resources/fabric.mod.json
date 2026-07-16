@@ -30,6 +30,7 @@
     "snowrealmagic": "*",
     "sereneseasons": "*",
     "seasons": "*",
-    "vanillabackport": "*"
+    "vanillabackport": "*",
+    "fabric-api": "*"
   }
 }
