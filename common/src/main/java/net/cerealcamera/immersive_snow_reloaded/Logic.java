@@ -104,13 +104,19 @@ public class Logic {
     private static boolean shouldMelt(Level level, Biome biome, BlockPos pos) {
         // TODO: seems like light level 11 is one block too much for SRM, but works fine for vanilla?
         boolean brightEnough = level.getBrightness(LightLayer.BLOCK, pos) > 11;
-        if (SERENE_SEASONS) return SereneSeasonsHook.shouldMelt(level, biome, pos) || brightEnough;
+        if (SERENE_SEASONS) {
+            if (SNOW_REAL_MAGIC) return SnowRealMagicHook.shouldMelt(level, pos);
+            return SereneSeasonsHook.shouldMelt(level, biome, pos) || brightEnough;
+        }
         return biome.warmEnoughToRain(pos) || brightEnough;
     }
 
     private static boolean coldEnoughToSnow(Level level, Biome biome, BlockPos pos) {
         boolean darkEnough = level.getBrightness(LightLayer.BLOCK, pos) <= 11;
-        if (SERENE_SEASONS) return SereneSeasonsHook.coldEnoughToSnow(level, biome, pos) && darkEnough;
+        if (SERENE_SEASONS) {
+            if (SNOW_REAL_MAGIC) return SnowRealMagicHook.coldEnoughToSnow(level, pos);
+            return SereneSeasonsHook.coldEnoughToSnow(level, biome, pos) && darkEnough;
+        }
         return biome.coldEnoughToSnow(pos) && darkEnough;
     }
 }
