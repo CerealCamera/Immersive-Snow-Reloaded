@@ -1,14 +1,24 @@
-# Editors and things
-.idea
-.vscode
-desktop.ini
-.DS_Store
+# eclipse
+bin
+*.launch
+.settings
+.metadata
+.classpath
+.project
 
-# Gradle build output & temp files
+# idea
+out
+*.ipr
+*.iws
+*.iml
+.idea/*
+!.idea/scopes
+
+# gradle
 build
-run
 .gradle
-.architectury-transformer
 
-# Special temporary file that contains current version for conditional checks in code (Manifold)
-build.properties
+# other
+eclipse
+run
+runs

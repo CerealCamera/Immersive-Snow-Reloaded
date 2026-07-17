@@ -8,8 +8,6 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(ChunkMap.class)
 public interface ChunkMapAccessor {
-
-    // Exposes the private map containing all active ChunkHolders
     @Accessor("visibleChunkMap")
     Long2ObjectLinkedOpenHashMap<ChunkHolder> getVisibleChunkMap();
 

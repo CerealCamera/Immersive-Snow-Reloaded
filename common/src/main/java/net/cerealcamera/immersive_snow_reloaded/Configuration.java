@@ -3,23 +3,18 @@ package net.cerealcamera.immersive_snow_reloaded;
 import com.google.common.io.Files;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import net.fabricmc.loader.api.FabricLoader;
+import net.cerealcamera.immersive_snow_reloaded.platform.Services;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Path;
 
 public class Configuration {
     public static ConfigurationData data = new ConfigurationData();
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
-    private static final File PATH = getConfigDir().resolve("ImmersiveSnowReloaded.json").toFile();
-
-    public static Path getConfigDir() {
-        return FabricLoader.getInstance().getConfigDir();
-    }
+    private static final File PATH = Services.PLATFORM.getConfigDir().resolve("ImmersiveSnowReloaded.json").toFile();
 
     public static void load() {
         try {

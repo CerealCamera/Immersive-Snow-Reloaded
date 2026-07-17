@@ -1,0 +1,67 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+}
+
+base {
+    archivesName = "${id}-${project.name}-${minecraft_version}"
+}
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(java_version)
+    withSourcesJar()
+    withJavadocJar()
+}
+
+tasks.withType(Jar).configureEach {
+    from(rootProject.file('LICENSE')) {
+        rename { "${it}_${displayname}" }
+    }
+}
+
+jar {
+
+    manifest {
+        attributes([
+                'Specification-Title'   : displayname,
+                'Specification-Vendor'  : author,
+                'Specification-Version' : project.jar.archiveVersion,
+                'Implementation-Title'  : project.name,
+                'Implementation-Version': project.jar.archiveVersion,
+                'Implementation-Vendor' : author,
+                'Built-On-Minecraft'    : minecraft_version
+        ])
+    }
+}
+
+processResources {
+    var expandProps = [
+            "id"                         : project.id,
+            "name"                       : project.displayname,
+            "description"                : project.description,
+            "author"                     : project.author,
+            "license"                    : project.license,
+            "websiteUrl"                 : project.website,
+            "issueTrackerUrl"            : project.issues,
+            "neoForgeUpdateUrl"          : project.updater,
+            "version"                    : project.mod_version,
+            "fabricMinecraftDependency"  : project.fabric_minecraft_dependency,
+            "neoForgeMinecraftDependency": project.neoforge_minecraft_dependency,
+            "neoForgeVersion"            : project.neoforge_dependency,
+            "neoForgeLoaderVersion"      : project.neoforge_loader_version
+    ]
+
+    var jsonExpandProps = expandProps.collectEntries {
+        key, value -> [(key): value instanceof String ? value.replace('\n', '\\\\n') : value]
+    }
+
+    filesMatching(['META-INF/mods.toml', 'META-INF/neoforge.mods.toml']) {
+        expand expandProps
+    }
+
+    filesMatching(['fabric.mod.json', '*.mixins.json']) {
+        expand jsonExpandProps
+    }
+
+    inputs.properties(expandProps)
+}
