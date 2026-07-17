@@ -24,6 +24,11 @@ public class ConfigurationData {
     public long memoryDuration = 600;
 
     /**
+     * Whether leaf litter should be replaced with snow in the winter.
+     */
+    public boolean enableLeafLitterRemoval = true;
+
+    /**
      * Whether to only replace air, leaf litter, ice and Snow! Real Magic! compatible blocks.
      * (should have parity with the normal mode)
      */
@@ -32,10 +37,20 @@ public class ConfigurationData {
     /**
      * Whether biomeBlacklist should be a blacklist.
      */
-    public boolean isBlacklist = true;
+    public boolean isBiomeBlacklist = true;
 
     /**
      * What biomes to skip when processing chunks.
      */
     public ArrayList<String> biomeBlacklist = new ArrayList<>();
+
+    /**
+     * Whether blockBlacklist should be a blacklist.
+     */
+    public boolean isBlockBlacklist = true;
+
+    /**
+     * What blocks to skip when processing chunks.
+     */
+    public ArrayList<String> blockBlacklist = new ArrayList<>();
 }

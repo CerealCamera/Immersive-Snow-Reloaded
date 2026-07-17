@@ -58,16 +58,13 @@ public class Logic {
         BlockState blockState = level.getBlockState(blockPos);
 
         Biome biome = level.getBiome(topPos).value();
-        String biomeId = level.getBiome(topPos).getRegisteredName();
+        String blockId = blockState.getBlockHolder().getRegisteredName();
+        String topId = topState.getBlockHolder().getRegisteredName();
 
-        if (Configuration.data.isBlacklist) {
-            if (Configuration.data.biomeBlacklist.contains(biomeId)) return;
-        } else {
-            if (!Configuration.data.biomeBlacklist.contains(biomeId)) return;
-        }
+        if (isBiomeBlacklisted(level.getBiome(topPos).getRegisteredName())) return;
 
         /* Leaf litter removing */
-        if (VANILLA_BACKPORT) {
+        if (VANILLA_BACKPORT && Configuration.data.enableLeafLitterRemoval) {
             if (topState.is(VanillaBackportHook.LEAF_LITTER)) {
                 Utils.setBlock(level, topPos, Blocks.AIR.defaultBlockState());
                 if (!biome.shouldSnow(level, topPos))
@@ -76,29 +73,41 @@ public class Logic {
         }
 
         /* Snowing and Freezing */
-        if (biome.shouldSnow(level, topPos) && !topState.is(Blocks.SNOW) && Blocks.SNOW.defaultBlockState().canSurvive(level, topPos) && (!Configuration.data.strictReplacement || topState.isAir())) {
+        if (biome.shouldSnow(level, topPos) && !topState.is(Blocks.SNOW) && Blocks.SNOW.defaultBlockState().canSurvive(level, topPos) && (!Configuration.data.strictReplacement || topState.isAir()) && !isBlockBlacklisted(topId)) {
             Utils.setBlock(level, topPos, Blocks.SNOW.defaultBlockState());
-        } else if (biome.shouldFreeze(level, blockPos, false) && !blockState.is(Blocks.ICE) && (!Configuration.data.strictReplacement || blockState.is(Blocks.WATER))) {
+        } else if (biome.shouldFreeze(level, blockPos, false) && !blockState.is(Blocks.ICE) && (!Configuration.data.strictReplacement || blockState.is(Blocks.WATER)) && !isBlockBlacklisted(blockId)) {
             Utils.setBlock(level, blockPos, Blocks.ICE.defaultBlockState());
         } else if (SNOW_REAL_MAGIC && coldEnoughToSnow(level, biome, topPos)) {
-            if (SnowRealMagicHook.canReplaceBlock(topState) && !SnowRealMagicHook.canMelt(topState))
+            if (SnowRealMagicHook.canReplaceBlock(topState) && !SnowRealMagicHook.canMelt(topState) && !isBlockBlacklisted(topId))
                 SnowRealMagicHook.replaceBlock(level, topPos, topState);
-            else if (SnowRealMagicHook.canReplaceBlock(blockState) && !SnowRealMagicHook.canMelt(blockState))
+            else if (SnowRealMagicHook.canReplaceBlock(blockState) && !SnowRealMagicHook.canMelt(blockState) && !isBlockBlacklisted(blockId))
                 SnowRealMagicHook.replaceBlock(level, blockPos, blockState);
         }
 
         /* Melting */
-        else if (blockState.is(Blocks.ICE) && shouldMelt(level, biome, topPos)) {
+        else if (blockState.is(Blocks.ICE) && shouldMelt(level, biome, topPos) && !isBlockBlacklisted(topId)) {
             Utils.setBlock(level, blockPos, IceBlock.meltsInto());
             level.neighborChanged(blockPos, IceBlock.meltsInto().getBlock(), blockPos);
-        } else if (topState.is(Blocks.SNOW) && shouldMelt(level, biome, topPos)) {
+        } else if (topState.is(Blocks.SNOW) && shouldMelt(level, biome, topPos) && !isBlockBlacklisted(topId)) {
             Utils.setBlock(level, topPos, Blocks.AIR.defaultBlockState());
         } else if (SNOW_REAL_MAGIC && shouldMelt(level, biome, topPos)) {
-            if (SnowRealMagicHook.canMelt(topState))
+            if (SnowRealMagicHook.canMelt(topState) && !isBlockBlacklisted(topId))
                 SnowRealMagicHook.melt(level, topPos, topState);
-            else if (SnowRealMagicHook.canMelt(blockState))
+            else if (SnowRealMagicHook.canMelt(blockState) && !isBlockBlacklisted(blockId))
                 SnowRealMagicHook.melt(level, blockPos, blockState);
         }
+    }
+
+    private static boolean isBiomeBlacklisted(String biomeId) {
+        if (Configuration.data.isBiomeBlacklist)
+            return !Configuration.data.biomeBlacklist.contains(biomeId);
+        return Configuration.data.biomeBlacklist.contains(biomeId);
+    }
+
+    private static boolean isBlockBlacklisted(String blockId) {
+        if (Configuration.data.isBlockBlacklist)
+            return !Configuration.data.biomeBlacklist.contains(blockId);
+        return Configuration.data.biomeBlacklist.contains(blockId);
     }
 
     private static boolean shouldMelt(Level level, Biome biome, BlockPos pos) {
