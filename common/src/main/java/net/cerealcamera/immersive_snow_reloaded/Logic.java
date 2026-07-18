@@ -121,7 +121,7 @@ public class Logic {
     }
 
     private static boolean coldEnoughToSnow(Level level, Biome biome, BlockPos pos) {
-        if (!level.getBrightness(LightLayer.BLOCK, pos) > 11) return false;
+        if (level.getBrightness(LightLayer.BLOCK, pos) > 11) return false;
         if (SERENE_SEASONS) {
             if (SNOW_REAL_MAGIC) return SnowRealMagicHook.coldEnoughToSnow(level, pos);
             return SereneSeasonsHook.coldEnoughToSnow(level, biome, pos);
