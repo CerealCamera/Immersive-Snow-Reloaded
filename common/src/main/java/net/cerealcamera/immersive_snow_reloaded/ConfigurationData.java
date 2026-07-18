@@ -24,11 +24,6 @@ public class ConfigurationData {
     public long memoryDuration = 600;
 
     /**
-     * Whether leaf litter should be replaced with snow in the winter.
-     */
-    public boolean enableLeafLitterRemoval = true;
-
-    /**
      * Whether to only replace air, leaf litter, ice and Snow! Real Magic! compatible blocks.
      * (should have parity with the normal mode)
      */
