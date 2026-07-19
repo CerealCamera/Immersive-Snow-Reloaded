@@ -37,7 +37,7 @@ public class Configuration {
             writer.append("\n");
             writer.close();
         } catch (IOException e) {
-            ImmersiveSnowReloaded.LOGGER.error(String.format("Failed writing configuration file: %s", e));
+            ImmersiveSnowReloaded.LOGGER.error("Failed writing configuration file: {}", e);
         }
     }
 }

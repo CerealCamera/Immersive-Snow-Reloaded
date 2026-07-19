@@ -111,8 +111,8 @@ public class Logic {
     }
 
     private static boolean isBlockNotBlacklisted(String blockId) {
-        if (Configuration.data.isBlockBlacklist) return !Configuration.data.biomeBlacklist.contains(blockId);
-        return Configuration.data.biomeBlacklist.contains(blockId);
+        if (Configuration.data.isBlockBlacklist) return !Configuration.data.blockBlacklist.contains(blockId);
+        return Configuration.data.blockBlacklist.contains(blockId);
     }
 
     private static boolean shouldMelt(Level level, Biome biome, BlockPos pos) {
