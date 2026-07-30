@@ -58,10 +58,10 @@ public class Logic {
         BlockState blockState = level.getBlockState(blockPos);
 
         Biome biome = level.getBiome(topPos).value();
-        String blockId = blockState.getBlockHolder().getRegisteredName();
-        String topId = topState.getBlockHolder().getRegisteredName();
+        String blockId = blockState.getBlockHolder().unwrapKey().toString();
+        String topId = topState.getBlockHolder().unwrapKey().toString();
 
-        if (isBiomeBlacklisted(level.getBiome(topPos).getRegisteredName())) return;
+        if (isBiomeBlacklisted(level.getBiome(topPos).unwrapKey().toString())) return;
 
         boolean blockNotBlacklisted = isBlockNotBlacklisted(blockId);
         boolean topNotBlacklisted = isBlockNotBlacklisted(topId);

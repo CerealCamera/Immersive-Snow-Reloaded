@@ -24,13 +24,13 @@
   ],
   "depends": {
     "fabric": ">=${fabricVersion}",
-    "minecraft": "${minecraftVersion}"
+    "minecraft": "${minecraftVersion}",
+    "fabric-api": "*"
   },
   "recommends": {
     "snowrealmagic": "*",
     "sereneseasons": "*",
     "seasons": "*",
-    "vanillabackport": "*",
-    "fabric-api": "*"
+    "vanillabackport": "*"
   }
 }

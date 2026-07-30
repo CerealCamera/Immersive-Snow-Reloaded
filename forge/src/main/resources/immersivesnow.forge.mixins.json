@@ -1,0 +1,9 @@
+{
+  "parent": "immersivesnow.mixins.json",
+  "package": "straywave.minecraft.immersivesnow.forge.mixin",
+  "refmap": "immersivesnow.forge.refmap.json",
+  "client": [
+  ],
+  "mixins": [
+  ]
+}

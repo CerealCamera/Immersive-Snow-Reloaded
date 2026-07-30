@@ -3,7 +3,7 @@
   "package": "net.cerealcamera.immersive_snow_reloaded.mixin",
   "plugin": "net.cerealcamera.immersive_snow_reloaded.MixinConfigPlugin",
   "minVersion": "0.8",
-  "compatibilityLevel": "JAVA_21",
+  "compatibilityLevel": "JAVA_17",
   "mixins": [
     "ChunkMapInvoker",
     "MinecraftServerInvoker",

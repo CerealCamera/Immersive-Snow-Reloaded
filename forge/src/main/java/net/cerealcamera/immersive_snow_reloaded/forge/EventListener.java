@@ -1,18 +1,18 @@
-package net.cerealcamera.immersive_snow_reloaded.neoforge;
+package net.cerealcamera.immersive_snow_reloaded.forge;
 
 import net.cerealcamera.immersive_snow_reloaded.Command;
 import net.cerealcamera.immersive_snow_reloaded.ImmersiveSnowReloadedEvents;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.event.RegisterCommandsEvent;
-import net.neoforged.neoforge.event.level.ChunkEvent;
-import net.neoforged.neoforge.event.level.LevelEvent;
-import net.neoforged.neoforge.event.tick.LevelTickEvent;
+import net.minecraftforge.event.RegisterCommandsEvent;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.level.ChunkEvent;
+import net.minecraftforge.event.level.LevelEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 
-@EventBusSubscriber
+
+@Mod.EventBusSubscriber
 public class EventListener {
     @SubscribeEvent
     public static void onLevelLoad(LevelEvent.Load event) {
@@ -36,10 +36,9 @@ public class EventListener {
     }
 
     @SubscribeEvent
-    public static void onWorldTick(LevelTickEvent.Post event) {
-        Level level = event.getLevel();
-        if (level.isClientSide()) return;
-        ImmersiveSnowReloadedEvents.onWorldTick((ServerLevel) level);
+    public static void onWorldTick(TickEvent.LevelTickEvent event) {
+        if (event.side.isClient() || event.phase != TickEvent.Phase.END || !event.haveTime()) return;
+        ImmersiveSnowReloadedEvents.onWorldTick((ServerLevel) event.level);
     }
 
     @SubscribeEvent

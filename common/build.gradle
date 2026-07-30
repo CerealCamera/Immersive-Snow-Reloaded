@@ -9,13 +9,13 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:$rootProject.fabric_loader_version"
 
     // These are only compile-time dependencies, their classes may or may not be absent/present at runtime.
-    modCompileOnly "net.neoforged:neoforge:${rootProject.neoforge_version}"
+    modCompileOnly "net.fabricmc.fabric-api:fabric-api:$rootProject.fabric_api_version"
 
-    modCompileOnly "maven.modrinth:serene-seasons:${rootProject.sereneseasons_neoforge}"
-    modCompileOnly "maven.modrinth:glitchcore:${rootProject.glitchcore_neoforge}"
+    modCompileOnly "maven.modrinth:serene-seasons:${rootProject.sereneseasons_forge}"
+    modCompileOnly "maven.modrinth:glitchcore:${rootProject.glitchcore_forge}"
 
-    modCompileOnly "maven.modrinth:snow-real-magic:${rootProject.snowrealmagic_neoforge}"
-    modCompileOnly "maven.modrinth:kiwi:${rootProject.kiwi_neoforge}"
+    modCompileOnly "maven.modrinth:snow-real-magic:${rootProject.snowrealmagic_fabric}"
+    modCompileOnly "maven.modrinth:kiwi:${rootProject.kiwi_fabric}"
 
     modCompileOnly "maven.modrinth:vanillabackport:${rootProject.vanillabackport_fabric}"
 

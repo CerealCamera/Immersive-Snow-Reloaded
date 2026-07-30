@@ -39,6 +39,8 @@ dependencies {
     modImplementation "maven.modrinth:kiwi:${rootProject.kiwi_fabric}"
     modImplementation "maven.modrinth:vanillabackport:${rootProject.vanillabackport_fabric}"
     modImplementation "maven.modrinth:platform:${rootProject.platform_fabric}"
+
+    modImplementation "com.bawnorton.mixinsquared:mixinsquared-fabric:0.2.0"
 }
 
 processResources {
@@ -52,8 +54,7 @@ processResources {
             "issueTrackerUrl" : rootProject.issues,
             "version"         : project.version,
             "minecraftVersion": rootProject.minecraft_version,
-            "fabricVersion"   : rootProject.fabric_loader_version_dependency,
-            "neoForgeVersion" : rootProject.neoforge_version_dependency,
+            "fabricVersion"   : rootProject.fabric_loader_version_dependency
     ]
 
     inputs.properties props

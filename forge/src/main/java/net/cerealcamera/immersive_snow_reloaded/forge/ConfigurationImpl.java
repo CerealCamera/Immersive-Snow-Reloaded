@@ -1,6 +1,6 @@
-package net.cerealcamera.immersive_snow_reloaded.neoforge;
+package net.cerealcamera.immersive_snow_reloaded.forge;
 
-import net.neoforged.fml.loading.FMLPaths;
+import net.minecraftforge.fml.loading.FMLPaths;
 
 import java.nio.file.Path;
 

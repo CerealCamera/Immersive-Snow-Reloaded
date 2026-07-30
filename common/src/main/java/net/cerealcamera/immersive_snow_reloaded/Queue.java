@@ -37,7 +37,7 @@ public class Queue {
 
     /** Removes the element at the front of the current-tick queue and returns it. */
     public static Entry pop() {
-        return currentTickChunks.removeFirst();
+        return currentTickChunks.remove(0);
     }
 
     /** Shuffles items from the next-tick queue to the end of the current-tick queue. */
