@@ -14,10 +14,15 @@ import net.minecraft.world.level.block.IceBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
 
+import java.util.ArrayList;
+import java.util.Set;
+
 public class Logic {
     private static final boolean SERENE_SEASONS = ModHooks.sereneSeasonsLoaded();
     private static final boolean SNOW_REAL_MAGIC = ModHooks.snowRealMagicLoaded();
     private static final boolean VANILLA_BACKPORT = ModHooks.vanillaBackportLoaded();
+
+    private static final ArrayList<String> strictReplacementWhitelist = new ArrayList<>(Set.of("minecraft:air", "minecraft:water", "minecraft:ice", "minecraft:snow"));
 
     /**
      * Iterates over all (X, Z) combinations within a chunk and runs snow recalculation logic on them.
@@ -80,9 +85,9 @@ public class Logic {
         }
 
         /* Snowing and Freezing */
-        if (biome.shouldSnow(level, topPos) && !topState.is(Blocks.SNOW) && Blocks.SNOW.defaultBlockState().canSurvive(level, topPos) && (!Configuration.data.strictReplacement || topState.isAir()) && topNotBlacklisted) {
+        if (biome.shouldSnow(level, topPos) && !topState.is(Blocks.SNOW) && Blocks.SNOW.defaultBlockState().canSurvive(level, topPos) && topNotBlacklisted) {
             Utils.setBlock(level, topPos, Blocks.SNOW.defaultBlockState());
-        } else if (biome.shouldFreeze(level, blockPos, false) && !blockState.is(Blocks.ICE) && (!Configuration.data.strictReplacement || blockState.is(Blocks.WATER)) && blockNotBlacklisted) {
+        } else if (biome.shouldFreeze(level, blockPos, false) && !blockState.is(Blocks.ICE) && blockNotBlacklisted) {
             Utils.setBlock(level, blockPos, Blocks.ICE.defaultBlockState());
         } else if (SNOW_REAL_MAGIC && coldEnoughToSnow(level, biome, topPos)) {
             if (SnowRealMagicHook.canReplaceBlock(topState) && !SnowRealMagicHook.canMelt(topState) && topNotBlacklisted)
@@ -111,6 +116,8 @@ public class Logic {
     }
 
     private static boolean isBlockNotBlacklisted(String blockId) {
+        if (Configuration.data.strictReplacement && !strictReplacementWhitelist.contains(blockId)) return false;
+
         if (Configuration.data.isBlockBlacklist) return !Configuration.data.blockBlacklist.contains(blockId);
         return Configuration.data.blockBlacklist.contains(blockId);
     }
