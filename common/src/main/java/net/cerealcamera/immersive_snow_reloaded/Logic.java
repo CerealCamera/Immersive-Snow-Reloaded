@@ -71,6 +71,9 @@ public class Logic {
         boolean blockNotBlacklisted = isBlockNotBlacklisted(blockId);
         boolean topNotBlacklisted = isBlockNotBlacklisted(topId);
 
+        boolean blockStrictReplacementWhitelisted = isBlockStrictWhitelisted(blockId);
+        boolean topStrictReplacementWhitelisted = isBlockStrictWhitelisted(topId);
+
         /* Leaf litter removing */
         if (VANILLA_BACKPORT && topNotBlacklisted) {
             if (topState.is(VanillaBackportHook.LEAF_LITTER)) {
@@ -85,9 +88,9 @@ public class Logic {
         }
 
         /* Snowing and Freezing */
-        if (biome.shouldSnow(level, topPos) && !topState.is(Blocks.SNOW) && Blocks.SNOW.defaultBlockState().canSurvive(level, topPos) && topNotBlacklisted) {
+        if (biome.shouldSnow(level, topPos) && !topState.is(Blocks.SNOW) && Blocks.SNOW.defaultBlockState().canSurvive(level, topPos) && topNotBlacklisted && topStrictReplacementWhitelisted) {
             Utils.setBlock(level, topPos, Blocks.SNOW.defaultBlockState());
-        } else if (biome.shouldFreeze(level, blockPos, false) && !blockState.is(Blocks.ICE) && blockNotBlacklisted) {
+        } else if (biome.shouldFreeze(level, blockPos, false) && !blockState.is(Blocks.ICE) && blockNotBlacklisted && blockStrictReplacementWhitelisted) {
             Utils.setBlock(level, blockPos, Blocks.ICE.defaultBlockState());
         } else if (SNOW_REAL_MAGIC && coldEnoughToSnow(level, biome, topPos)) {
             if (SnowRealMagicHook.canReplaceBlock(topState) && !SnowRealMagicHook.canMelt(topState) && topNotBlacklisted)
@@ -97,10 +100,10 @@ public class Logic {
         }
 
         /* Melting */
-        else if (blockState.is(Blocks.ICE) && shouldMelt(level, biome, topPos) && blockNotBlacklisted) {
+        else if (blockState.is(Blocks.ICE) && shouldMelt(level, biome, topPos) && blockNotBlacklisted && blockStrictReplacementWhitelisted) {
             Utils.setBlock(level, blockPos, IceBlock.meltsInto());
             level.neighborChanged(blockPos, IceBlock.meltsInto().getBlock(), blockPos);
-        } else if (topState.is(Blocks.SNOW) && shouldMelt(level, biome, topPos) && topNotBlacklisted) {
+        } else if (topState.is(Blocks.SNOW) && shouldMelt(level, biome, topPos) && topNotBlacklisted && topStrictReplacementWhitelisted) {
             Utils.setBlock(level, topPos, Blocks.AIR.defaultBlockState());
         } else if (SNOW_REAL_MAGIC && shouldMelt(level, biome, topPos)) {
             if (SnowRealMagicHook.canMelt(topState) && topNotBlacklisted)
@@ -116,10 +119,12 @@ public class Logic {
     }
 
     private static boolean isBlockNotBlacklisted(String blockId) {
-        if (Configuration.data.strictReplacement && !strictReplacementWhitelist.contains(blockId)) return false;
-
         if (Configuration.data.isBlockBlacklist) return !Configuration.data.blockBlacklist.contains(blockId);
         return Configuration.data.blockBlacklist.contains(blockId);
+    }
+
+    private static boolean isBlockStrictWhitelisted(String blockId) {
+        return !Configuration.data.strictReplacement || strictReplacementWhitelist.contains(blockId);
     }
 
     private static boolean shouldMelt(Level level, Biome biome, BlockPos pos) {
