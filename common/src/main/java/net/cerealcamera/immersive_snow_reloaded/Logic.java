@@ -2,7 +2,6 @@ package net.cerealcamera.immersive_snow_reloaded;
 
 import net.cerealcamera.immersive_snow_reloaded.hook.SereneSeasonsHook;
 import net.cerealcamera.immersive_snow_reloaded.hook.SnowRealMagicHook;
-import net.cerealcamera.immersive_snow_reloaded.hook.VanillaBackportHook;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ChunkPos;
@@ -20,7 +19,6 @@ import java.util.Set;
 public class Logic {
     private static final boolean SERENE_SEASONS = ModHooks.sereneSeasonsLoaded();
     private static final boolean SNOW_REAL_MAGIC = ModHooks.snowRealMagicLoaded();
-    private static final boolean VANILLA_BACKPORT = ModHooks.vanillaBackportLoaded();
 
     private static final ArrayList<String> strictReplacementWhitelist = new ArrayList<>(Set.of("minecraft:air", "minecraft:water", "minecraft:ice", "minecraft:snow"));
 
@@ -75,20 +73,17 @@ public class Logic {
         boolean topStrictReplacementWhitelisted = isBlockStrictWhitelisted(topId);
 
         /* Leaf litter removing */
-        if (VANILLA_BACKPORT && topNotBlacklisted) {
-            if (topState.is(VanillaBackportHook.LEAF_LITTER)) {
-                Utils.setBlock(level, topPos, Blocks.AIR.defaultBlockState());
-                if (biome.shouldSnow(level, topPos) && Blocks.SNOW.defaultBlockState().canSurvive(level, topPos)) {
-                    Utils.setBlock(level, topPos, Blocks.SNOW.defaultBlockState());
-                } else {
-                    Utils.setBlock(level, topPos, topState);
-                }
-                return;
+        if (topId.equals("minecraft:leaf_litter") && topNotBlacklisted) {
+            Utils.setBlock(level, topPos, Blocks.AIR.defaultBlockState());
+            if (biome.shouldSnow(level, topPos) && Blocks.SNOW.defaultBlockState().canSurvive(level, topPos)) {
+                Utils.setBlock(level, topPos, Blocks.SNOW.defaultBlockState());
+            } else {
+                Utils.setBlock(level, topPos, topState);
             }
         }
 
         /* Snowing and Freezing */
-        if (biome.shouldSnow(level, topPos) && !topState.is(Blocks.SNOW) && Blocks.SNOW.defaultBlockState().canSurvive(level, topPos) && topNotBlacklisted && topStrictReplacementWhitelisted) {
+        else if (biome.shouldSnow(level, topPos) && !topState.is(Blocks.SNOW) && Blocks.SNOW.defaultBlockState().canSurvive(level, topPos) && topNotBlacklisted && topStrictReplacementWhitelisted) {
             Utils.setBlock(level, topPos, Blocks.SNOW.defaultBlockState());
         } else if (biome.shouldFreeze(level, blockPos, false) && !blockState.is(Blocks.ICE) && blockNotBlacklisted && blockStrictReplacementWhitelisted) {
             Utils.setBlock(level, blockPos, Blocks.ICE.defaultBlockState());

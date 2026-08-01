@@ -5,7 +5,6 @@ import net.neoforged.fml.loading.LoadingModList;
 public class ModHooksImpl {
     private static final boolean SERENE_SEASONS = LoadingModList.get().getModFileById("sereneseasons") != null;
     private static final boolean SNOW_REAL_MAGIC = LoadingModList.get().getModFileById("snowrealmagic") != null;
-    private static final boolean VANILLA_BACKPORT = LoadingModList.get().getModFileById("vanillabackport") != null;
 
     public static boolean sereneSeasonsLoaded() {
         return SERENE_SEASONS;
@@ -13,9 +12,5 @@ public class ModHooksImpl {
 
     public static boolean snowRealMagicLoaded() {
         return SNOW_REAL_MAGIC;
-    }
-
-    public static boolean vanillaBackportLoaded() {
-        return VANILLA_BACKPORT;
     }
 }
