@@ -14,8 +14,4 @@ public class ModHooksImpl {
     public static boolean snowRealMagicLoaded() {
         return SNOW_REAL_MAGIC;
     }
-
-    public static boolean vanillaBackportLoaded() {
-        return VANILLA_BACKPORT;
-    }
 }

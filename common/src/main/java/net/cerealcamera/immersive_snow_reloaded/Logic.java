@@ -2,7 +2,6 @@ package net.cerealcamera.immersive_snow_reloaded;
 
 import net.cerealcamera.immersive_snow_reloaded.hook.SereneSeasonsHook;
 import net.cerealcamera.immersive_snow_reloaded.hook.SnowRealMagicHook;
-import net.cerealcamera.immersive_snow_reloaded.hook.VanillaBackportHook;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ChunkPos;
@@ -17,7 +16,6 @@ import net.minecraft.world.level.levelgen.Heightmap;
 public class Logic {
     private static final boolean SERENE_SEASONS = ModHooks.sereneSeasonsLoaded();
     private static final boolean SNOW_REAL_MAGIC = ModHooks.snowRealMagicLoaded();
-    private static final boolean VANILLA_BACKPORT = ModHooks.vanillaBackportLoaded();
 
     /**
      * Iterates over all (X, Z) combinations within a chunk and runs snow recalculation logic on them.
@@ -67,15 +65,12 @@ public class Logic {
         boolean topNotBlacklisted = isBlockNotBlacklisted(topId);
 
         /* Leaf litter removing */
-        if (VANILLA_BACKPORT && topNotBlacklisted) {
-            if (topState.is(VanillaBackportHook.LEAF_LITTER)) {
-                Utils.setBlock(level, topPos, Blocks.AIR.defaultBlockState());
-                if (biome.shouldSnow(level, topPos) && Blocks.SNOW.defaultBlockState().canSurvive(level, topPos)) {
-                    Utils.setBlock(level, topPos, Blocks.SNOW.defaultBlockState());
-                } else {
-                    Utils.setBlock(level, topPos, topState);
-                }
-                return;
+        if (blockId.equals("minecraft:leaf_litter") && topNotBlacklisted) {
+            Utils.setBlock(level, topPos, Blocks.AIR.defaultBlockState());
+            if (biome.shouldSnow(level, topPos) && Blocks.SNOW.defaultBlockState().canSurvive(level, topPos)) {
+                Utils.setBlock(level, topPos, Blocks.SNOW.defaultBlockState());
+            } else {
+                Utils.setBlock(level, topPos, topState);
             }
         }
 
