@@ -8,9 +8,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import sereneseasons.api.season.SeasonChangedEvent;
-import sereneseasons.config.SeasonsConfig;
-import sereneseasons.init.ModConfig;
-import sereneseasons.init.ModTags;
 import sereneseasons.season.SeasonHooks;
 
 // Code adapted from Snow Real Magic mod
@@ -27,19 +24,6 @@ public class SereneSeasonsHook {
     }
 
     public static boolean shouldMelt(Level level, Biome biome, BlockPos pos) {
-        boolean vanillaBehavior = !biome.coldEnoughToSnow(pos, level.getSeaLevel());
-
-        // Bypass if biome is blacklisted via tags
-        Holder<Biome> biomeHolder = Holder.direct(biome);
-        if (biomeHolder.is(ModTags.Biomes.BLACKLISTED_BIOMES)) return vanillaBehavior;
-
-        // Bypass if snow is disabled or dimension not whitelisted
-        SeasonsConfig seasonsConfig = ModConfig.seasons;
-        if (!seasonsConfig.generateSnowAndIce || !seasonsConfig.isDimensionWhitelisted(level.dimension())) {
-            return vanillaBehavior;
-        }
-
-        // Return hook from Serene Seasons
         return !coldEnoughToSnow(level, biome, pos);
     }
 
