@@ -31,7 +31,7 @@ public class SnowRealMagicHook {
     }
 
     public static boolean shouldMelt(Level level, BlockPos pos) {
-        return SereneSeasonsCompat.shouldMelt(level, pos, level.getBiome(pos));
+        return !coldEnoughToSnow(level, pos);
     }
 
     public static boolean coldEnoughToSnow(Level level, BlockPos pos) {
