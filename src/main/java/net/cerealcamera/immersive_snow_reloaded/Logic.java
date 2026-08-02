@@ -2,6 +2,7 @@ package net.cerealcamera.immersive_snow_reloaded;
 
 import net.cerealcamera.immersive_snow_reloaded.hook.SereneSeasonsHook;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
@@ -12,8 +13,13 @@ import net.minecraft.world.level.block.IceBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
 
+import java.util.ArrayList;
+import java.util.Set;
+
 public class Logic {
     private static final boolean SERENE_SEASONS = ModHooks.sereneSeasonsLoaded();
+
+    private static final ArrayList<String> strictReplacementWhitelist = new ArrayList<>(Set.of("minecraft:air", "minecraft:water", "minecraft:ice", "minecraft:snow"));
 
     /**
      * Iterates over all (X, Z) combinations within a chunk and runs snow recalculation logic on them.
@@ -54,40 +60,67 @@ public class Logic {
         BlockState blockState = level.getBlockState(blockPos);
 
         Biome biome = level.getBiome(topPos).value();
+        String blockId = BuiltInRegistries.BLOCK.getKey(blockState.getBlock()).toString();
+        String topId = BuiltInRegistries.BLOCK.getKey(topState.getBlock()).toString();
+
+        if (isBiomeBlacklisted(level.getBiome(topPos).getRegisteredName())) return;
+
+        boolean blockNotBlacklisted = isBlockNotBlacklisted(blockId);
+        boolean topNotBlacklisted = isBlockNotBlacklisted(topId);
+
+        boolean blockStrictReplacementWhitelisted = isBlockStrictWhitelisted(blockId);
+        boolean topStrictReplacementWhitelisted = isBlockStrictWhitelisted(topId);
 
         /* Leaf litter removing */
-        if (topState.is(Blocks.LEAF_LITTER)) {
+        if (topState.is(Blocks.LEAF_LITTER) && topNotBlacklisted) {
             Utils.setBlock(level, topPos, Blocks.AIR.defaultBlockState());
-            if (!biome.shouldSnow(level, topPos))
+            if (biome.shouldSnow(level, topPos) && Blocks.SNOW.defaultBlockState().canSurvive(level, topPos)) {
+                Utils.setBlock(level, topPos, Blocks.SNOW.defaultBlockState());
+            } else {
                 Utils.setBlock(level, topPos, topState);
+            }
         }
 
         /* Snowing and Freezing */
-        if (biome.shouldSnow(level, topPos) && !topState.is(Blocks.SNOW) && Blocks.SNOW.defaultBlockState().canSurvive(level, topPos)) {
+        else if (biome.shouldSnow(level, topPos) && !topState.is(Blocks.SNOW) && Blocks.SNOW.defaultBlockState().canSurvive(level, topPos) && topNotBlacklisted && topStrictReplacementWhitelisted) {
             Utils.setBlock(level, topPos, Blocks.SNOW.defaultBlockState());
-        } else if (biome.shouldFreeze(level, blockPos, false) && !blockState.is(Blocks.ICE)) {
+        } else if (biome.shouldFreeze(level, blockPos, false) && !blockState.is(Blocks.ICE) && blockNotBlacklisted && blockStrictReplacementWhitelisted) {
             Utils.setBlock(level, blockPos, Blocks.ICE.defaultBlockState());
         }
 
         /* Melting */
-        else if (blockState.is(Blocks.ICE) && shouldMelt(level, biome, topPos)) {
+        else if (blockState.is(Blocks.ICE) && shouldMelt(level, biome, topPos) && blockNotBlacklisted && blockStrictReplacementWhitelisted) {
             Utils.setBlock(level, blockPos, IceBlock.meltsInto());
             level.neighborChanged(blockPos, IceBlock.meltsInto().getBlock(), null);
-        } else if (topState.is(Blocks.SNOW) && shouldMelt(level, biome, topPos)) {
+        } else if (topState.is(Blocks.SNOW) && shouldMelt(level, biome, topPos) && topNotBlacklisted && topStrictReplacementWhitelisted) {
             Utils.setBlock(level, topPos, Blocks.AIR.defaultBlockState());
         }
     }
 
+    private static boolean isBiomeBlacklisted(String biomeId) {
+        if (Configuration.data.isBiomeBlacklist) return Configuration.data.biomeBlacklist.contains(biomeId);
+        return !Configuration.data.biomeBlacklist.contains(biomeId);
+    }
+
+    private static boolean isBlockNotBlacklisted(String blockId) {
+        if (Configuration.data.isBlockBlacklist) return !Configuration.data.blockBlacklist.contains(blockId);
+        return Configuration.data.blockBlacklist.contains(blockId);
+    }
+
+    private static boolean isBlockStrictWhitelisted(String blockId) {
+        return !Configuration.data.strictReplacement || strictReplacementWhitelist.contains(blockId);
+    }
+
     private static boolean shouldMelt(Level level, Biome biome, BlockPos pos) {
         // TODO: seems like light level 11 is one block too much for SRM, but works fine for vanilla?
-        boolean brightEnough = level.getBrightness(LightLayer.BLOCK, pos) > 11;
-        if (SERENE_SEASONS) return SereneSeasonsHook.shouldMelt(level, biome, pos) || brightEnough;
-        return biome.warmEnoughToRain(pos, level.getSeaLevel()) || brightEnough;
+        if (level.getBrightness(LightLayer.BLOCK, pos) > 11) return true;
+        if (SERENE_SEASONS) return SereneSeasonsHook.shouldMelt(level, biome, pos);
+        return biome.warmEnoughToRain(pos, level.getSeaLevel());
     }
 
     private static boolean coldEnoughToSnow(Level level, Biome biome, BlockPos pos) {
-        boolean darkEnough = level.getBrightness(LightLayer.BLOCK, pos) <= 11;
-        if (SERENE_SEASONS) return SereneSeasonsHook.coldEnoughToSnow(level, biome, pos) && darkEnough;
-        return biome.coldEnoughToSnow(pos, level.getSeaLevel()) && darkEnough;
+        if (level.getBrightness(LightLayer.BLOCK, pos) > 11) return false;
+        if (SERENE_SEASONS) return SereneSeasonsHook.coldEnoughToSnow(level, biome, pos);
+        return biome.coldEnoughToSnow(pos, level.getSeaLevel());
     }
 }

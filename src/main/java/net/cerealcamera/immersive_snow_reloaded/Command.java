@@ -28,6 +28,11 @@ public class Command {
         recalculate.executes(Command::recalculate);
         command.then(recalculate);
 
+        // Recalculate all
+        LiteralArgumentBuilder<CommandSourceStack> all = LiteralArgumentBuilder.literal("all");
+        all.executes(Command::all);
+        command.then(recalculate.then(all));
+
         // Forget
         LiteralArgumentBuilder<CommandSourceStack> forget = LiteralArgumentBuilder.literal("forget");
         forget.executes(Command::forget);
@@ -37,6 +42,11 @@ public class Command {
         LiteralArgumentBuilder<CommandSourceStack> heightmaps = LiteralArgumentBuilder.literal("heightmaps");
         heightmaps.executes(Command::heightmaps);
         command.then(heightmaps);
+
+        // Reload
+        LiteralArgumentBuilder<CommandSourceStack> reload = LiteralArgumentBuilder.literal("reload");
+        reload.executes(Command::reload);
+        command.then(reload);
 
         dispatcher.register(command);
     }
@@ -75,6 +85,18 @@ public class Command {
             sendResponse(context, message);
         }
 
+        return 1;
+    }
+
+    private static int all(CommandContext<CommandSourceStack> context) {
+        ImmersiveSnowReloadedEvents.onSeasonChange(context.getSource().getLevel());
+        sendResponse(context, "Added all chunks to queue");
+        return 1;
+    }
+
+    private static int reload(CommandContext<CommandSourceStack> context) {
+        Configuration.load();
+        sendResponse(context, "Config reloaded");
         return 1;
     }
 }
