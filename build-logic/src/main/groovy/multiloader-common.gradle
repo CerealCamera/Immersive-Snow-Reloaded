@@ -4,7 +4,7 @@ plugins {
 }
 
 base {
-    archivesName = "${id}-${project.name}-${minecraft_version}"
+    archivesName = "${id}-${mod_version}+${advertised_minecraft_version}-${project.name}"
 }
 
 java {
@@ -44,7 +44,7 @@ processResources {
             "websiteUrl"                 : project.website,
             "issueTrackerUrl"            : project.issues,
             "neoForgeUpdateUrl"          : project.updater,
-            "version"                    : project.mod_version,
+            "version"                    : "${mod_version}+${advertised_minecraft_version}",
             "fabricMinecraftDependency"  : project.fabric_minecraft_dependency,
             "neoForgeMinecraftDependency": project.neoforge_minecraft_dependency,
             "neoForgeVersion"            : project.neoforge_dependency,
