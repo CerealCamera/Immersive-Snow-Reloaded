@@ -3,6 +3,7 @@ package net.cerealcamera.immersive_snow_reloaded;
 import net.cerealcamera.immersive_snow_reloaded.hook.SereneSeasonsHook;
 import net.cerealcamera.immersive_snow_reloaded.hook.SnowRealMagicHook;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
@@ -61,8 +62,8 @@ public class Logic {
         BlockState blockState = level.getBlockState(blockPos);
 
         Biome biome = level.getBiome(topPos).value();
-        String blockId = blockState.getBlock().getName().toString();
-        String topId = topState.getBlock().getName().toString();
+        String blockId = BuiltInRegistries.BLOCK.getKey(blockState.getBlock()).toString();
+        String topId = BuiltInRegistries.BLOCK.getKey(topState.getBlock()).toString();
 
         if (isBiomeBlacklisted(level.getBiome(topPos).getRegisteredName())) return;
 
