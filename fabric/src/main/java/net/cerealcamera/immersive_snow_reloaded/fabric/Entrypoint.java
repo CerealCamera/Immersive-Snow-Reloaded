@@ -1,5 +1,8 @@
-package net.cerealcamera.immersive_snow_reloaded;
+package net.cerealcamera.immersive_snow_reloaded.fabric;
 
+import net.cerealcamera.immersive_snow_reloaded.Command;
+import net.cerealcamera.immersive_snow_reloaded.ImmersiveSnowReloaded;
+import net.cerealcamera.immersive_snow_reloaded.ImmersiveSnowReloadedEvents;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerChunkEvents;
