@@ -23,7 +23,9 @@
         "immersive_snow_reloaded.mixins.json"
     ],
     "depends": {
-        "minecraft": ">=26.1 <26.4",
+        "minecraft": "~26.3",
+        "java": ">=25",
+        "fabricloader": ">=0.19.3",
         "fabric-api": "*"
     },
     "recommends": {

@@ -36,8 +36,8 @@ dependencies {
     implementation "maven.modrinth:serene-seasons:${project.sereneseasons_fabric}"
     implementation "maven.modrinth:glitchcore:${project.glitchcore_fabric}"
 
-    implementation "maven.modrinth:snow-real-magic:${project.snowrealmagic_fabric}"
-    implementation "maven.modrinth:kiwi:${project.kiwi_fabric}"
+    compileOnly "maven.modrinth:snow-real-magic:${project.snowrealmagic_fabric}"
+    compileOnly "maven.modrinth:kiwi:${project.kiwi_fabric}"
 }
 
 processResources {
@@ -65,6 +65,7 @@ jar {
 }
 
 shadowJar {
+    from(rootProject.file('LICENSE'))
     configurations = [project.configurations.shadowBundle]
     archiveClassifier = null
 }

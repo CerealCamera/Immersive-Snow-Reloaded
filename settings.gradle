@@ -1,8 +1,15 @@
 pluginManagement {
     repositories {
+        mavenCentral()
         maven { url = 'https://maven.fabricmc.net/' }
         maven { url = 'https://maven.architectury.dev/' }
-        maven { url = 'https://files.minecraftforge.net/maven/' }
+        maven {
+            url = 'https://maven.minecraftforge.net/'
+            content {
+                includeGroup 'de.oceanlabs.mcp'
+                includeGroup 'net.minecraftforge'
+            }
+        }
         gradlePluginPortal()
     }
 }
@@ -11,4 +18,6 @@ rootProject.name = 'Immersive-Snow-Reloaded'
 
 include 'common'
 include 'fabric'
-include 'neoforge'
+if (providers.gradleProperty('enabled_platforms').get().split(',').contains('neoforge')) {
+    include 'neoforge'
+}

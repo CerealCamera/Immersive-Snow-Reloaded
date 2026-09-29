@@ -8,9 +8,17 @@ dependencies {
     // Do NOT use other classes from Fabric Loader.
     implementation "net.fabricmc:fabric-loader:$rootProject.fabric_loader_version"
 
-    compileOnly "maven.modrinth:serene-seasons:${project.sereneseasons_neoforge}"
-    compileOnly "maven.modrinth:glitchcore:${project.glitchcore_neoforge}"
+    // The Fabric compatibility jars expose Fabric API interfaces in their signatures.
+    compileOnly "net.fabricmc.fabric-api:fabric-api:$rootProject.fabric_api_version"
 
-    compileOnly "maven.modrinth:snow-real-magic:${project.snowrealmagic_neoforge}"
-    compileOnly "maven.modrinth:kiwi:${project.kiwi_neoforge}"
+    compileOnly "maven.modrinth:serene-seasons:${project.sereneseasons_fabric}"
+    compileOnly "maven.modrinth:glitchcore:${project.glitchcore_fabric}"
+
+    compileOnly "maven.modrinth:snow-real-magic:${project.snowrealmagic_fabric}"
+    compileOnly "maven.modrinth:kiwi:${project.kiwi_fabric}"
+}
+
+// Match the transformation tool's loader to the declared development loader.
+configurations.named('architecturyTransformerClasspath') {
+    resolutionStrategy.force "net.fabricmc:fabric-loader:$rootProject.fabric_loader_version"
 }
