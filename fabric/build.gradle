@@ -38,6 +38,9 @@ dependencies {
 
     implementation "maven.modrinth:snow-real-magic:${project.snowrealmagic_fabric}"
     implementation "maven.modrinth:kiwi:${project.kiwi_fabric}"
+
+    compileOnly "maven.modrinth:snow:${project.snow_fabric}"
+    compileOnly "maven.modrinth:mru:${project.mru_fabric}"
 }
 
 processResources {

@@ -1,6 +1,7 @@
 package net.cerealcamera.immersive_snow_reloaded;
 
 import net.cerealcamera.immersive_snow_reloaded.hook.SereneSeasonsHook;
+import net.cerealcamera.immersive_snow_reloaded.hook.SnowHook;
 import net.cerealcamera.immersive_snow_reloaded.hook.SnowRealMagicHook;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -20,6 +21,7 @@ import java.util.Set;
 public class Logic {
     private static final boolean SERENE_SEASONS = ModHooks.sereneSeasonsLoaded();
     private static final boolean SNOW_REAL_MAGIC = ModHooks.snowRealMagicLoaded();
+    private static final boolean SNOW = ModHooks.snowLoaded();
 
     private static final ArrayList<String> strictReplacementWhitelist = new ArrayList<>(Set.of("minecraft:air", "minecraft:water", "minecraft:ice", "minecraft:snow"));
 
@@ -88,11 +90,20 @@ public class Logic {
             Utils.setBlock(level, topPos, Blocks.SNOW.defaultBlockState());
         } else if (biome.shouldFreeze(level, blockPos, false) && !blockState.is(Blocks.ICE) && blockNotBlacklisted && blockStrictReplacementWhitelisted) {
             Utils.setBlock(level, blockPos, Blocks.ICE.defaultBlockState());
-        } else if (SNOW_REAL_MAGIC && coldEnoughToSnow(level, biome, topPos)) {
-            if (SnowRealMagicHook.canReplaceBlock(topState) && !SnowRealMagicHook.canMelt(topState) && topNotBlacklisted)
-                SnowRealMagicHook.replaceBlock(level, topPos, topState);
-            else if (SnowRealMagicHook.canReplaceBlock(blockState) && !SnowRealMagicHook.canMelt(blockState) && blockNotBlacklisted)
-                SnowRealMagicHook.replaceBlock(level, blockPos, blockState);
+        } else if (coldEnoughToSnow(level, biome, topPos)) {
+            if (SNOW_REAL_MAGIC) {
+                if (SnowRealMagicHook.canReplaceBlock(topState) && !SnowRealMagicHook.canMelt(topState) && topNotBlacklisted)
+                    SnowRealMagicHook.replaceBlock(level, topPos, topState);
+                else if (SnowRealMagicHook.canReplaceBlock(blockState) && !SnowRealMagicHook.canMelt(blockState) && blockNotBlacklisted)
+                    SnowRealMagicHook.replaceBlock(level, blockPos, blockState);
+            }
+
+            if (SNOW) {
+                if (SnowHook.canReplaceBlock(topState) && topNotBlacklisted)
+                    SnowHook.replaceBlock(level, topPos);
+                else if (SnowHook.canReplaceBlock(blockState) && blockNotBlacklisted)
+                    SnowHook.replaceBlock(level, blockPos);
+            }
         }
 
         /* Melting */
