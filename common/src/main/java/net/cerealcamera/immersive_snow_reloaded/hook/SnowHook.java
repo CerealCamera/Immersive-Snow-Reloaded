@@ -1,6 +1,7 @@
 package net.cerealcamera.immersive_snow_reloaded.hook;
 
 import dev.imb11.snow.snowlogging.Snowlogging;
+import net.cerealcamera.immersive_snow_reloaded.Utils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.Blocks;
@@ -13,6 +14,6 @@ public class SnowHook {
 
     public static void replaceBlock(ServerLevel world, BlockPos pos) {
         Snowlogging.snowlog(world, pos);
-        world.setBlock(pos, Blocks.SNOW.defaultBlockState(), 2);
+        Utils.setBlock(world, pos, Blocks.SNOW.defaultBlockState());
     }
 }
