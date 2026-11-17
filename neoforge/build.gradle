@@ -42,6 +42,9 @@ dependencies {
 
     compileOnly "maven.modrinth:snow-real-magic:${project.snowrealmagic_neoforge}"
     compileOnly "maven.modrinth:kiwi:${project.kiwi_neoforge}"
+
+    compileOnly "maven.modrinth:snow:${project.snow_neoforge}"
+    compileOnly "maven.modrinth:mru:${project.mru_neoforge}"
 }
 
 processResources {
