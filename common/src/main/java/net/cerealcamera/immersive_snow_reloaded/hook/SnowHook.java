@@ -12,8 +12,8 @@ public class SnowHook {
         return Snowlogging.canSnowlog(state);
     }
 
-    public static void replaceBlock(ServerLevel world, BlockPos pos) {
-        Snowlogging.snowlog(world, pos);
-        Utils.setBlock(world, pos, Blocks.SNOW.defaultBlockState());
+    public static void replaceBlock(ServerLevel level, BlockPos pos) {
+        Snowlogging.snowlog(level, pos);
+        Utils.setBlock(level, pos, Blocks.SNOW.defaultBlockState());
     }
 }
