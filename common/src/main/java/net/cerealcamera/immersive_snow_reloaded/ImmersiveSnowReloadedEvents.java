@@ -1,5 +1,6 @@
 package net.cerealcamera.immersive_snow_reloaded;
 
+import net.cerealcamera.immersive_snow_reloaded.hook.SereneSeasonsHook;
 import net.cerealcamera.immersive_snow_reloaded.mixin.ChunkMapAccessor;
 import net.cerealcamera.immersive_snow_reloaded.mixin.MinecraftServerInvoker;
 import net.minecraft.server.level.ChunkHolder;
@@ -7,8 +8,11 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.chunk.ChunkAccess;
+import sereneseasons.api.season.Season;
 
 public class ImmersiveSnowReloadedEvents {
+    private static final boolean SERENE_SEASONS = ModHooks.sereneSeasonsLoaded();
+
     public static void onLevelLoad(ServerLevel level) {
         Queue.clear();
         Memory.erase();
@@ -27,6 +31,15 @@ public class ImmersiveSnowReloadedEvents {
     public static void onWorldTick(ServerLevel level) {
         MinecraftServerInvoker server = (MinecraftServerInvoker) level.getServer();
         if (!level.dimension().identifier().toString().equals("minecraft:overworld")) return;
+
+        if (SERENE_SEASONS) {
+            Season season = SereneSeasonsHook.getCurrentSeason(level);
+
+            if (season == Season.WINTER && level.getWeatherData().isRaining())
+                Logic.incrementSeasonalTicks(1);
+            else if (season == Season.SPRING)
+                Logic.incrementSeasonalTicks(level.getWeatherData().isRaining() ? 2 : 1);
+        }
 
         if (Queue.isEmpty()) {
             Queue.shuffle();

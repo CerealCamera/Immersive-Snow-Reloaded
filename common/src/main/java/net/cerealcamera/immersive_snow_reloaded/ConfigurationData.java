@@ -19,9 +19,9 @@ public class ConfigurationData {
     public int maxChunksToProcessPerTick = 10;
 
     /**
-     * How long to wait before processing the same chunk (in seconds).
+     * How large the difference in processChance needs to be to process the same chunk (from 0.0 to 1.0).
      */
-    public long memoryDuration = 600;
+    public double memoryThreshold = 0.1;
 
     /**
      * Whether to only replace air, leaf litter, ice and Snow! Real Magic! compatible blocks.
@@ -48,4 +48,7 @@ public class ConfigurationData {
      * What blocks to skip when processing chunks.
      */
     public ArrayList<String> blockBlacklist = new ArrayList<>();
+
+    //TODO: add onlyRemoveChunksFromQueueOnUnload option, on by default
+    //TODO: add recalculateLoadedChunksLive option
 }
