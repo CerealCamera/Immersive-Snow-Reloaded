@@ -28,6 +28,7 @@
     },
     "recommends": {
         "snowrealmagic": "*",
-        "sereneseasons": "*"
+        "sereneseasons": "*",
+        "snow": "*"
     }
 }
